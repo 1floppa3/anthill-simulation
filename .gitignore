@@ -1,0 +1,3 @@
+/.idea/
+cmake-build-debug
+/cmake-build-debug/_deps/flac-src/CMakeLists.txt
