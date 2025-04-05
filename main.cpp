@@ -1,56 +1,50 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 #include <iostream>
 
-class Anthill {
-    static constexpr float initial_radius = 50.f;
-    static constexpr int shape_count = 6;
-    static constexpr auto color = sf::Color(139, 69, 19);
-    static constexpr float scale_factor = 0.5f;
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
-    sf::CircleShape model;
-    int level = 1;
+#include "Ant.h"
+#include "Anthill.h"
+#include "TextureManager.h"
 
-public:
-    explicit Anthill(const sf::Vector2u& size): model(initial_radius, shape_count) {
-        model.setFillColor(color);
-        model.setOrigin({initial_radius, initial_radius});
-        update_position(size);
-    }
-
-    void update_position(const sf::Vector2u& size) {
-        model.setPosition({static_cast<float>(size.x) / 4.f, static_cast<float>(size.y) / 2.f});
-    }
-
-    void upgrade() {
-        level++;
-        float new_scale = 1.0f + scale_factor*static_cast<float>(level - 1);
-        model.setScale({new_scale, new_scale});
-    }
-
-    void downgrade() {
-        level = std::max(1, level - 1);
-        float new_scale = 1.0f + scale_factor*static_cast<float>(level - 1);
-        model.setScale({new_scale, new_scale});
-    }
-
-    void update(sf::RenderWindow& window) const {
-        window.draw(model);
-    }
-};
+#define TITLE "Anthill simulation"
+#define ANT_COUNT 25
 
 int main() {
-    bool is_fullscreen = false;
-    sf::Vector2u size(800, 600);
-    sf::RenderWindow window(
-        sf::VideoMode(size),
-        "Anthill simulation",
-        sf::Style::Close | sf::Style::Resize,
-        sf::State::Windowed);
-    window.setVerticalSyncEnabled(true);
+    std::srand(time(nullptr));
 
-    Anthill anthill(window.getSize());
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(),
+        TITLE,
+        sf::Style::Default,
+        sf::State::Fullscreen);
+    //window.setVerticalSyncEnabled(true);
+    sf::Vector2u size = window.getSize();
 
+    Anthill::instance().set_position({static_cast<float>(size.x) / 4.f, static_cast<float>(size.y) / 2.f});
+
+    sf::Texture texture = TextureManager::instance().get("../assets/textures/base.png");
+    texture.setRepeated(true);
+    sf::Sprite background_sprite(texture, sf::IntRect({0, 0},
+        {static_cast<int>(size.x), static_cast<int>(size.y)}));
+
+    sf::Font general_font;
+    if (!general_font.openFromFile("../assets/fonts/Jura-VariableFont_wght.ttf"))
+        std::cerr << "Error loading font." << std::endl;
+    AnthillInfoText anthill_info_text(general_font);
+    anthill_info_text.update(window);
+
+    std::vector<Ant> ants;
+    for (int i = 0; i < ANT_COUNT; ++i) {
+        ants.emplace_back(window.getSize());
+    }
+
+    sf::Text fps_text(general_font, "", 20);
+    fps_text.setFillColor(sf::Color::White);
+    fps_text.setPosition({10.f, 10.f});
+    int frame_count = 0;
+    float time_accumulator = 0.f;
+
+    sf::Clock clock;
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
@@ -59,35 +53,30 @@ int main() {
                 const sf::Keyboard::Scancode keycode = keyPressed->scancode;
                 if (keycode == sf::Keyboard::Scancode::Escape) {
                     window.close();
-                } else if (keycode == sf::Keyboard::Scancode::Left || keycode == sf::Keyboard::Scancode::A) {
-                    anthill.downgrade();
                 } else if (keycode == sf::Keyboard::Scancode::Right || keycode == sf::Keyboard::Scancode::D) {
-                    anthill.upgrade();
-                } else if (keycode == sf::Keyboard::Scancode::F11) {
-                    is_fullscreen = !is_fullscreen;
-                    if (is_fullscreen) {
-                        window.create(sf::VideoMode::getDesktopMode(),
-                            "Anthill simulation",
-                            sf::Style::Default,
-                            sf::State::Fullscreen);
-                    } else {
-                        window.create(sf::VideoMode(size),
-                            "Anthill simulation",
-                            sf::Style::Close | sf::Style::Resize);
-                    }
-                    window.setVerticalSyncEnabled(true);
-                    anthill.update_position(window.getSize());
+                    Anthill::instance().expand();
+                    anthill_info_text.update(window);
                 }
-            } else if (const auto* resized = event->getIf<sf::Event::Resized>()) {
-                sf::FloatRect visibleArea({0, 0}, {static_cast<float>(resized->size.x), static_cast<float>(resized->size.y)});
-                window.setView(sf::View(visibleArea));
-                anthill.update_position(window.getSize());
-                size = resized->size;
             }
         }
+        sf::Time dt = clock.restart();
+        time_accumulator += dt.asSeconds();
+        frame_count++;
+        if (time_accumulator >= 1.f) {
+            fps_text.setString("FPS: " + std::to_string(static_cast<int>(static_cast<float>(frame_count) / time_accumulator)));
+            frame_count = 0;
+            time_accumulator = 0.f;
+        }
 
-        window.clear(sf::Color(70, 200, 60));
-        anthill.update(window);
+        Anthill::instance().update(dt);
+        for (Ant& ant : ants) ant.update(dt);
+
+        window.clear();
+        window.draw(background_sprite);
+        window.draw(Anthill::instance());
+        for (Ant& ant : ants) window.draw(ant);
+        window.draw(anthill_info_text);
+        window.draw(fps_text);
         window.display();
     }
 }

@@ -12,6 +12,6 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
-add_executable(simulation main.cpp)
+add_executable(simulation main.cpp TextureManager.cpp Anthill.cpp ant.cpp)
 
 target_link_libraries(simulation sfml-graphics sfml-window sfml-system)
