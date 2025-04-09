@@ -9,9 +9,9 @@ private:
     int age, health;
     Role *role;
 
-    void updateRole();
+    void update_role();
 
-    Role *getNewRole() const;
+    Role *get_new_role() const;
 
 public:
     Ant(int age, int health, Role *role);
@@ -20,9 +20,9 @@ public:
 
     ~Ant();
 
-    void doWork() const;
+    void do_work() const;
 
-    bool isAlive() const;
+    bool is_alive() const;
 };
 
 #endif //ANTHILL_SIMULATION_ANT_H

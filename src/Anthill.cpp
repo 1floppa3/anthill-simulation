@@ -4,31 +4,31 @@ Anthill::Anthill(int rank) : rank(rank) {}
 
 Anthill::Anthill() : rank(1) {}
 
-void Anthill::simulateDay() {
+void Anthill::simulate_day() {
     if (rank <= 0)
         return;
 
     for (auto &ant: ants) {
-        ant.doWork();
+        ant.do_work();
     }
 
     // Remove killed ants
     for (auto it = ants.begin(); it != ants.end();) {
-        if (!it->isAlive())
+        if (!it->is_alive())
             it = ants.erase(it);
         else
             ++it;
     }
 
-    alimentAnts();
-    maintainAnthill();
+    aliment_ants();
+    maintain_anthill();
 
-    updateSize();
+    update_size();
 }
 
-void Anthill::updateSize() {
-    if (resources[ResourceType::WOOD] >= anthillRanks[rank].woodToUpdate && rank < maxRank) {
-        resources[ResourceType::WOOD] -= anthillRanks[rank].woodToUpdate;
+void Anthill::update_size() {
+    if (resources[ResourceType::WOOD] >= anthill_ranks[rank].wood_to_update && rank < max_rank) {
+        resources[ResourceType::WOOD] -= anthill_ranks[rank].wood_to_update;
         ++rank;
     }
     if (resources[ResourceType::WOOD] < 0 && rank > 0) {
@@ -37,10 +37,10 @@ void Anthill::updateSize() {
     }
 }
 
-void Anthill::maintainAnthill() {
+void Anthill::maintain_anthill() {
 
 }
 
-void Anthill::alimentAnts(){
+void Anthill::aliment_ants(){
 
 }

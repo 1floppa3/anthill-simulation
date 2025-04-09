@@ -13,24 +13,24 @@ Ant::~Ant() {
     delete role;
 }
 
-void Ant::doWork() const {
+void Ant::do_work() const {
     role->work();
 }
 
-void Ant::updateRole() {
-    Role *temp = getNewRole();
+void Ant::update_role() {
+    Role *temp = get_new_role();
     if (temp != nullptr) {
         delete role;
         role = temp;
     }
 }
 
-bool Ant::isAlive() const {
+bool Ant::is_alive() const {
     return health > 0;
 }
 
 // TODO: change
-Role *Ant::getNewRole() const {
+Role *Ant::get_new_role() const {
     if (age > 40 && dynamic_cast<Cleaner *>(role) == nullptr)
         return new Cleaner;
     if (age > 30 && dynamic_cast<Forager *>(role) == nullptr)

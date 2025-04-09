@@ -15,7 +15,7 @@ int main() {
     /*
     *Anthill anthill;
     for (int i = 0; i < 10000; ++i) {
-    anthill.simulateDay();
+    anthill.simulate_day();
     }*/
 
     std::srand(time(nullptr));

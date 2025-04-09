@@ -12,14 +12,14 @@ enum class ResourceType {
 
 class Anthill {
     struct Rank {
-        int woodToUpdate, antsCapacity, woodToMaintain;
+        int wood_to_update, ants_capacity, wood_to_maintain;
     };
-    const static int maxRank = 4;
-    constexpr const static Rank anthillRanks[maxRank + 1] = {{0,  0,  0},
-                                                             {10, 10, 2},
-                                                             {15, 20, 4},
-                                                             {20, 30, 6},
-                                                             {25, 40, 8}};
+    const static int max_rank = 4;
+    constexpr const static Rank anthill_ranks[max_rank + 1] = {{0,  0,  0},
+                                                               {10, 10, 2},
+                                                               {15, 20, 4},
+                                                               {20, 30, 6},
+                                                               {25, 40, 8}};
     int rank;
     std::list<Ant> ants;
     std::map<ResourceType, int> resources;
@@ -28,13 +28,13 @@ public:
 
     Anthill();
 
-    void simulateDay();
+    void simulate_day();
 
-    void alimentAnts();
+    void aliment_ants();
 
-    void maintainAnthill();
+    void maintain_anthill();
 
-    void updateSize();
+    void update_size();
 };
 
 #endif //ANTHILL_SIMULATION_ANTHILL_H
