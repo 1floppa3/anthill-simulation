@@ -5,6 +5,6 @@
 
 class Soldier: public Role{
 public:
-    void work() const override;
+    void work(AntDrawable& drawable_ant) const override;
 };
 #endif //ANTHILL_SIMULATION_SOLDIER_H

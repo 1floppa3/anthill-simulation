@@ -1,3 +1,3 @@
 #include "Soldier.h"
 
-void Soldier::work() const {}
+void Soldier::work(AntDrawable& drawable_ant) const {}

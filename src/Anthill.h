@@ -35,6 +35,7 @@ public:
     void maintain_anthill();
 
     void update_size();
+
 };
 
 #endif //ANTHILL_SIMULATION_ANTHILL_H

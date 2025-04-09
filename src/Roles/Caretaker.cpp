@@ -1,5 +1,5 @@
 #include "Caretaker.h"
 
-void Caretaker::work() const {
+void Caretaker::work(AntDrawable& drawable_ant) const {
 
 }

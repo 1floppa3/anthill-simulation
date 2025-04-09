@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Forager.h"
 
-void Forager::work() const {}
+void Forager::work(AntDrawable& drawable_ant) const {}

@@ -3,6 +3,7 @@
 
 #include "Roles/Role.h"
 #include "Roles/NoRole.h"
+#include "Drawable/AntDrawable.h"
 
 class Ant {
 private:
@@ -13,10 +14,13 @@ private:
 
     Role *get_new_role() const;
 
-public:
-    Ant(int age, int health, Role *role);
 
-    Ant(int age, int health);
+public:
+    AntDrawable *pic{};
+
+    Ant();
+
+    Ant(int age, int health, AntDrawable *ant_dr);
 
     ~Ant();
 

@@ -4,6 +4,6 @@
 #include "Role.h"
 
 class Forager: public Role{
-    void work() const override;
+    void work(AntDrawable& drawable_ant) const override;
 };
 #endif //ANTHILL_SIMULATION_FORAGER_H

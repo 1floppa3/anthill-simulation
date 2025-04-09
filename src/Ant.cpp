@@ -5,16 +5,23 @@
 #include "Roles/Soldier.h"
 #include "Roles/Caretaker.h"
 
-Ant::Ant(int age, int health, Role *role) : age(age), health(health), role(role) {}
 
-Ant::Ant(int age, int health) : age(age), health(health), role(new NoRole) {}
+Ant::Ant() : age(0), health(0), role(nullptr), pic(nullptr) {
+
+}
+
+Ant::Ant(int age, int health, AntDrawable *ant_dr) : age(age), health(health), role(new NoRole), pic(ant_dr) {
+    std::cout << age << '\n';
+}
 
 Ant::~Ant() {
+    std::cout << age << " deleted\n";
     delete role;
+    delete pic;
 }
 
 void Ant::do_work() const {
-    role->work();
+    role->work(*pic);
 }
 
 void Ant::update_role() {

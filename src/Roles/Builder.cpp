@@ -1,3 +1,3 @@
 #include "Builder.h"
 
-void Builder::work() const {}
+void Builder::work(AntDrawable& drawable_ant) const {}

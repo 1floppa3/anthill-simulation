@@ -2,7 +2,11 @@
 
 Anthill::Anthill(int rank) : rank(rank) {}
 
-Anthill::Anthill() : rank(1) {}
+Anthill::Anthill() : rank(1) {
+    for (int i = 0; i < 10; ++i) {
+//        ants.emplace(1, 1, AntDrawable(5));
+    }
+}
 
 void Anthill::simulate_day() {
     if (rank <= 0)

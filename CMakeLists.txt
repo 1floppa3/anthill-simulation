@@ -30,6 +30,8 @@ add_executable(
     src/Drawable/AnthillDrawable.cpp
         src/Drawable/AnthillInfoText.cpp
         src/Drawable/AnthillInfoText.h
+        src/Simulation.cpp
+        src/Simulation.h
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)
