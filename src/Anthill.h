@@ -11,7 +11,6 @@ enum class ResourceType {
 };
 
 class Anthill {
-private:
     struct Rank {
         int woodToUpdate, antsCapacity, woodToMaintain;
     };
