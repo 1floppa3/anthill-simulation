@@ -1,6 +1,6 @@
-#include "Simulation.h"
+#include "Core/Simulation.h"
 
 int main() {
-    Simulation simulation;
+    Core::Simulation simulation(sf::VideoMode::getDesktopMode().size);
     simulation.start_simulation();
 }

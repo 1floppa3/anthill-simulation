@@ -17,19 +17,23 @@ FetchContent_MakeAvailable(SFML)
 add_executable(
     anthill_simulation
     "src/main.cpp"
-    src/Ant.cpp
-    src/Roles/Caretaker.cpp
-    src/Roles/Soldier.cpp
-    src/Roles/Forager.cpp
-    src/Roles/Builder.cpp
-    src/Roles/Cleaner.cpp
-    src/Roles/NoRole.cpp
-    src/Anthill.cpp
-    src/TextureManager.cpp
-    src/Drawable/AntDrawable.cpp
-    src/Drawable/AnthillDrawable.cpp
-    src/Drawable/AnthillInfoText.cpp
-    src/Simulation.cpp
+    src/Model/Ant.cpp
+    src/Model/Roles/Caretaker.cpp
+    src/Model/Roles/Soldier.cpp
+    src/Model/Roles/Forager.cpp
+    src/Model/Roles/Builder.cpp
+    src/Model/Roles/Cleaner.cpp
+    src/Model/Roles/NoRole.cpp
+    src/Model/Anthill.cpp
+    src/Utils/TextureManager.cpp
+    src/Utils/Random.cpp
+    src/View/AntDrawable.cpp
+    src/View/AnthillDrawable.cpp
+    src/View/UI/AnthillInfoText.cpp
+    src/Core/Simulation.cpp
+    src/View/UI/HUD.cpp
+    src/View/UI/FPSText.cpp
+    src/View/UI/FPSText.h
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)
