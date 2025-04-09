@@ -1,9 +1,9 @@
-#ifndef ANTHILL_SIMULATION_BUILDER_H
-#define ANTHILL_SIMULATION_BUILDER_H
+#pragma once
 
 #include "Role.h"
 
-class Builder: public Role{
+class Builder final : public Role {
+public:
     void work(AntDrawable& drawable_ant) const override;
+    [[nodiscard]] Builder* clone() const override;
 };
-#endif //ANTHILL_SIMULATION_BUILDER_H

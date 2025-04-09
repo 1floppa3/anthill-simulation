@@ -85,3 +85,7 @@ void AntDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const 
     states.texture = &texture;
     target.draw(sprite, states);
 }
+
+AntDrawable* AntDrawable::clone() const {
+    return new AntDrawable(*this);
+}

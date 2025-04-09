@@ -1,14 +1,14 @@
-#ifndef ANTHILL_SIMULATION_NOROLE_H
-#define ANTHILL_SIMULATION_NOROLE_H
+#pragma once
 
 #include <iostream>
 #include "Role.h"
 
-class NoRole : public Role {
+class NoRole final : public Role {
 public:
     void work(AntDrawable& drawable_ant) const override {
         std::cout << drawable_ant.get_position().x;
-    };
+    }
+
+    [[nodiscard]] NoRole* clone() const override;
 };
 
-#endif //ANTHILL_SIMULATION_NOROLE_H

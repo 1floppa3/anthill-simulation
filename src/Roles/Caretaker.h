@@ -1,11 +1,9 @@
-#ifndef ANTHILL_SIMULATION_CARETAKER_H
-#define ANTHILL_SIMULATION_CARETAKER_H
+#pragma once
 
 #include "Role.h"
 
-class Caretaker : public Role {
+class Caretaker final : public Role {
 public:
     void work(AntDrawable& drawable_ant) const override;
+    [[nodiscard]] Caretaker* clone() const override;
 };
-
-#endif //ANTHILL_SIMULATION_CARETAKER_H

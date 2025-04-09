@@ -4,18 +4,33 @@
 #include "Roles/Forager.h"
 #include "Roles/Soldier.h"
 #include "Roles/Caretaker.h"
+#include "Roles/NoRole.h"
 
 
-Ant::Ant() : age(0), health(0), role(nullptr), pic(nullptr) {
-
+Ant::Ant(const int age, const int health, const sf::Vector2u& area): age(age), health(health),
+role(new NoRole), pic(new AntDrawable(area)) {
+    std::cout << "New ant with age " << age << '\n';
 }
 
-Ant::Ant(int age, int health, AntDrawable *ant_dr) : age(age), health(health), role(new NoRole), pic(ant_dr) {
-    std::cout << age << '\n';
+Ant::Ant(const Ant& other): age(other.age), health(other.health),
+role(other.role ? other.role->clone() : nullptr), pic(other.pic ? other.pic->clone() : nullptr) {
+    std::cout << "Copy ant with age " << other.age << '\n';
+}
+
+Ant& Ant::operator=(const Ant& other) {
+    if (this != &other) {
+        age = other.age;
+        health = other.health;
+        delete role;
+        delete pic;
+        role = other.role ? other.role->clone() : nullptr;
+        pic = other.pic ? other.pic->clone() : nullptr;
+    }
+    return *this;
 }
 
 Ant::~Ant() {
-    std::cout << age << " deleted\n";
+    std::cout << "Delete ant with age " << age << '\n';
     delete role;
     delete pic;
 }
@@ -32,10 +47,6 @@ void Ant::update_role() {
     }
 }
 
-bool Ant::is_alive() const {
-    return health > 0;
-}
-
 // TODO: change
 Role *Ant::get_new_role() const {
     if (age > 40 && dynamic_cast<Cleaner *>(role) == nullptr)
@@ -49,4 +60,8 @@ Role *Ant::get_new_role() const {
     if (dynamic_cast<NoRole *>(role) == nullptr)
         return new NoRole;
     return nullptr;
+}
+
+bool Ant::is_alive() const {
+    return health > 0;
 }

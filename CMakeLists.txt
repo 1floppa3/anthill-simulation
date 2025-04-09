@@ -28,10 +28,8 @@ add_executable(
     src/TextureManager.cpp
     src/Drawable/AntDrawable.cpp
     src/Drawable/AnthillDrawable.cpp
-        src/Drawable/AnthillInfoText.cpp
-        src/Drawable/AnthillInfoText.h
-        src/Simulation.cpp
-        src/Simulation.h
+    src/Drawable/AnthillInfoText.cpp
+    src/Simulation.cpp
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)

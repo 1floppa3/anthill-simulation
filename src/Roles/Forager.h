@@ -1,9 +1,9 @@
-#ifndef ANTHILL_SIMULATION_FORAGER_H
-#define ANTHILL_SIMULATION_FORAGER_H
+#pragma once
 
 #include "Role.h"
 
-class Forager: public Role{
+class Forager final : public Role {
+public:
     void work(AntDrawable& drawable_ant) const override;
+    [[nodiscard]] Forager* clone() const override;
 };
-#endif //ANTHILL_SIMULATION_FORAGER_H

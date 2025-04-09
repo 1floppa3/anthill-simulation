@@ -7,19 +7,8 @@
 void Simulation::start_simulation() {
     std::srand(time(nullptr));
 
-    sf::RenderWindow window = sf::RenderWindow(sf::VideoMode::getDesktopMode(),
-                                               TITLE,
-                                               sf::Style::Default,
-                                               sf::State::Windowed);
-    std::vector<Ant*> ants(ANT_COUNT);
+    auto window = sf::RenderWindow(sf::VideoMode::getDesktopMode(), TITLE, sf::Style::Default, sf::State::Windowed);
 
-    for (int i = 0; i < ANT_COUNT; ++i) {
-        ants[i] = new Ant(i, 1, new AntDrawable(window.getSize()));
-        std::cout << ants[i] << '\n';
-    }
-
-
-    //window.setVerticalSyncEnabled(true);
     sf::Vector2u size = window.getSize();
 
     AnthillDrawable::instance().set_position({static_cast<float>(size.x) / 4.f, static_cast<float>(size.y) / 2.f});
@@ -34,6 +23,11 @@ void Simulation::start_simulation() {
         std::cerr << "Error loading font." << std::endl;
     AnthillInfoText anthill_info_text(general_font);
     anthill_info_text.update(window);
+
+    std::vector<Ant> ants;
+    for (int i = 0; i < ANT_COUNT; ++i) {
+        ants.emplace_back(i, 1, size);
+    }
 
     sf::Text fps_text(general_font, "", 20);
     fps_text.setFillColor(sf::Color::White);
@@ -66,20 +60,16 @@ void Simulation::start_simulation() {
         }
 
         AnthillDrawable::instance().update(dt);
-        for (Ant* ant : ants) ant->pic->update(dt);
+        for (const Ant& ant : ants) ant.pic->update(dt);
 
         window.clear();
         window.draw(background_sprite);
         window.draw(AnthillDrawable::instance());
 
-        for (Ant* ant : ants) window.draw(*ant->pic);
+        for (const Ant& ant : ants) window.draw(*ant.pic);
 
         window.draw(anthill_info_text);
         window.draw(fps_text);
         window.display();
-
-//        for (int i = 0; i < ANT_COUNT; ++i) {
-//            delete ants[i];
-//        }
     }
 }

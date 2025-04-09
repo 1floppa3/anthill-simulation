@@ -9,7 +9,7 @@
 class Simulation {
     Anthill anthill;
 public:
-    void start_simulation();
+    static void start_simulation();
 };
 
 
