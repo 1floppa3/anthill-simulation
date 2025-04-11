@@ -6,6 +6,7 @@
 namespace View {
 
     class FoodMap final : public sf::Drawable {
+        const float area_margin = 50.f;
         struct Food {
             FoodPoint* point;
             bool reserved;

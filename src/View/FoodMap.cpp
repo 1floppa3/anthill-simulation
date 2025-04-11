@@ -5,7 +5,8 @@ namespace View {
 
     void FoodMap::generate_food(const sf::Vector2f& area) {
         const Food new_food = {
-            new FoodPoint({Utils::Random::random(area.x), Utils::Random::random(area.y)}),
+            new FoodPoint({Utils::Random::random(area_margin, area.x - area_margin),
+                                        Utils::Random::random(area_margin, area.y - area_margin)}),
             false
         };
         food_points.push_back(new_food);

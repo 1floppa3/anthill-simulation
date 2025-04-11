@@ -63,8 +63,8 @@ namespace Core {
             window.draw(bg);
             window.draw(*g_anthill.drawable);
             for (const Model::Ant &ant: g_anthill.ants) window.draw(*ant.drawable);
-            window.draw(hud);
             window.draw(*g_anthill.food_map);
+            window.draw(hud);
             window.display();
         }
     }
