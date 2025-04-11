@@ -11,6 +11,7 @@ namespace View::UI {
         const float line_spacing = 2.f;
         const float max_width = 400.f;
         const float background_padding = 10.f;
+        static constexpr int font_size = 18;
 
         const sf::Time display_duration = sf::seconds(7.5f);
         const sf::Time fade_duration = sf::seconds(4.f);

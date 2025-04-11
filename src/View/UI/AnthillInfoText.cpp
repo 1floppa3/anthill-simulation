@@ -5,7 +5,7 @@
 
 namespace View::UI {
 
-    AnthillInfoText::AnthillInfoText(): Text(Core::g_general_font, "", 32) {
+    AnthillInfoText::AnthillInfoText(): Text(Core::g_general_font, "", font_size) {
         this->setFillColor(sf::Color::White);
     }
     void AnthillInfoText::update(const sf::Vector2u &window_size) {

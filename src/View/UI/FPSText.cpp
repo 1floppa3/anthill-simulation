@@ -4,7 +4,7 @@
 
 namespace View::UI {
 
-    FPSText::FPSText(): Text(Core::g_general_font, "FPS: 0", 16), time_accumulator(0.f), frame_counter(0) {
+    FPSText::FPSText(): Text(Core::g_general_font, "FPS: 0", font_size), time_accumulator(0.f), frame_counter(0) {
         this->setFillColor(sf::Color::White);
         this->setPosition({margin_top_left, margin_top_left});
     }

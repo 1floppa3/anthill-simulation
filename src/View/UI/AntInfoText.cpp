@@ -4,7 +4,7 @@
 
 namespace View::UI {
 
-    AntInfoText::AntInfoText(): Text(Core::g_general_font, "", 16) {
+    AntInfoText::AntInfoText(): Text(Core::g_general_font, "", font_size) {
         this->setFillColor(sf::Color::White);
         this->setStyle(Bold);
     }

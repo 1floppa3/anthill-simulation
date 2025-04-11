@@ -13,7 +13,7 @@ namespace View::UI {
         std::string word;
         std::string cur_line;
         std::vector<std::string> lines;
-        sf::Text text(Core::g_log_font, "", 24);
+        sf::Text text(Core::g_log_font, "", font_size);
         while (iss >> word) {
             std::string test_line = cur_line.empty() ? word : cur_line + std::string(" ").append(word);
             text.setString(test_line);
@@ -55,7 +55,7 @@ namespace View::UI {
     void Logger::draw(sf::RenderTarget& target, const sf::RenderStates states) const {
         const sf::Vector2f view_size = target.getView().getSize();
 
-        sf::Text text(Core::g_log_font, "", 18);
+        sf::Text text(Core::g_log_font, "", font_size);
         sf::Color base_color(144, 238, 144);
 
         // TODO сделать округленные края
