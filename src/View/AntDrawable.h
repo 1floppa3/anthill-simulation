@@ -11,7 +11,7 @@ namespace View {
         const float sprite_scale = 0.08f;
         const float acceleration = 200.f;
         const float max_speed = 100.f;
-        const float reach_threshold = 1.0f;
+        const float reach_threshold = 4.0f;
 
         const sf::Texture& texture;
         sf::Sprite sprite;
