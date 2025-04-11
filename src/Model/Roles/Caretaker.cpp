@@ -3,7 +3,7 @@
 
 namespace Model::Roles {
 
-    void Caretaker::work(View::AntDrawable &drawable_ant, View::FoodMap &hive_mind) {
+    void Caretaker::work(View::AntDrawable &drawable_ant, View::FoodMap &food_map) {
     }
 
     Caretaker *Caretaker::clone() const {

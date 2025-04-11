@@ -23,7 +23,7 @@ namespace Model {
 
         ~Ant();
 
-        void do_work(View::FoodMap& hive_mind) const;
+        void do_work(View::FoodMap& food_map) const;
         void update_role();
 
         [[nodiscard]] bool is_alive() const;

@@ -36,8 +36,8 @@ namespace Model {
         Core::g_logger.add_message("Ant #" + std::to_string(id) + " is dead. Role: " + role->get_name() + '.');
     }
 
-    void Ant::do_work(View::FoodMap &hive_mind) const {
-        role->work(*drawable, hive_mind);
+    void Ant::do_work(View::FoodMap &food_map) const {
+        role->work(*drawable, food_map);
     }
 
     void Ant::update_role() {
