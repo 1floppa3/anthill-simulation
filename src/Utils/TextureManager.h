@@ -6,14 +6,15 @@
 
 namespace Utils {
 
-class TextureManager {
-    std::unordered_map<std::string, sf::Texture> textures_;
-    TextureManager() = default;
-public:
-    static TextureManager& instance();
-    TextureManager(const TextureManager&) = delete;
-    TextureManager& operator=(const TextureManager&) = delete;
-    sf::Texture& get(const std::string& filename);
-};
+    class TextureManager {
+        std::unordered_map<std::string, sf::Texture> textures_;
+        TextureManager() = default;
+
+    public:
+        static TextureManager& instance();
+        TextureManager(const TextureManager&) = delete;
+        TextureManager& operator=(const TextureManager&) = delete;
+        sf::Texture& get(const std::string& filename);
+    };
 
 }

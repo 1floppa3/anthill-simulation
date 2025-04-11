@@ -1,25 +1,32 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 #include "Roles/Role.h"
-#include "HiveMind.h"
+#include "../View/FoodMap.h"
 
-class Ant {
-    [[nodiscard]] Role *get_new_role() const;
+namespace Model {
 
-public:
-    int age, health;
-    Role *role;
-    View::AntDrawable *drawable;
+    class Ant {
+        [[nodiscard]] Roles::Role *get_new_role() const;
+        static int counter;
 
-    Ant() = default;
-    Ant(int age, int health, const sf::Vector2u &area, const sf::Font& font);
-    Ant(const Ant& other);
-    Ant& operator=(const Ant& other);
+    public:
+        int id, age, health;
+        Roles::Role *role;
+        View::AntDrawable *drawable;
 
-    ~Ant();
+        Ant() = default;
+        Ant(int age, int health, const sf::Vector2u &area);
+        Ant(const Ant& other);
+        Ant& operator=(const Ant& other);
 
-    void do_work(HiveMind& hive_mind) const;
-    void update_role();
+        ~Ant();
 
-    [[nodiscard]] bool is_alive() const;
-};
+        void do_work(View::FoodMap& hive_mind) const;
+        void update_role();
+
+        [[nodiscard]] bool is_alive() const;
+    };
+
+}

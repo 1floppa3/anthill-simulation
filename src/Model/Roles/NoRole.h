@@ -3,15 +3,18 @@
 #include <iostream>
 #include "Role.h"
 
-class NoRole final : public Role {
-public:
-    void work(View::AntDrawable& drawable_ant, HiveMind& hive_mind) override {
-    }
+namespace Model::Roles {
 
-    [[nodiscard]] NoRole* clone() const override;
+    class NoRole final : public Role {
+    public:
+        void work(View::AntDrawable& drawable_ant, View::FoodMap& hive_mind) override {
+        }
 
-    [[nodiscard]] std::string get_name() const override {
-        return "No role";
-    }
-};
+        [[nodiscard]] NoRole* clone() const override;
 
+        [[nodiscard]] std::string get_name() const override {
+            return "No role";
+        }
+    };
+
+}

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Core/Simulation.h"
 
 int main() {

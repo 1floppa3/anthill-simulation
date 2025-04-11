@@ -34,12 +34,16 @@ add_executable(
     src/View/UI/HUD.cpp
     src/View/UI/FPSText.cpp
     src/View/UI/FPSText.h
-        src/Core/EventManager.cpp
-        src/Core/EventManager.h
-        src/Model/FoodPoint.cpp
-        src/Model/FoodPoint.h
-        src/Model/HiveMind.cpp
-        src/Model/HiveMind.h
+        src/View/FoodPoint.cpp
+        src/View/FoodPoint.h
+        src/View/FoodMap.cpp
+        src/View/FoodMap.h
+        src/View/Background.cpp
+        src/View/Background.h
+        src/View/UI/AntInfoText.cpp
+        src/View/UI/AntInfoText.h
+        src/View/UI/Logger.cpp
+        src/View/UI/Logger.h
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)

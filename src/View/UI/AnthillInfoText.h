@@ -4,11 +4,12 @@
 
 namespace View::UI {
 
-class AnthillInfoText final : public sf::Text {
-    const float margin_top_right = 32.f;
-public:
-    explicit AnthillInfoText(const sf::Font& font);
-    void update(const sf::RenderWindow& window);
-};
+    class AnthillInfoText final : public sf::Text {
+        const float margin_top_right = 32.f;
+
+    public:
+        explicit AnthillInfoText();
+        void update(const sf::Vector2u& window_size);
+    };
 
 }

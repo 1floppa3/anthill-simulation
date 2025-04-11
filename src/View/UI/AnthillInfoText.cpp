@@ -5,16 +5,18 @@
 
 namespace View::UI {
 
-AnthillInfoText::AnthillInfoText(const sf::Font &font): Text(font, "", 36) {
-    this->setFillColor(sf::Color::White);
-}
+    AnthillInfoText::AnthillInfoText(): Text(Core::g_general_font, "", 32) {
+        this->setFillColor(sf::Color::White);
+    }
+    void AnthillInfoText::update(const sf::Vector2u &window_size) {
+        int population = 0;
+        for (Model::Ant& ant : Core::g_anthill.ants) if (ant.is_alive()) ++population;
 
-void AnthillInfoText::update(const sf::RenderWindow &window) {
-    int population = 0;
-    for (Ant& ant : Core::anthill.ants) if (ant.is_alive()) ++population;
-    this->setString("Days expired: " + std::to_string(Core::anthill.day_counter) + '\n'
-        + "Population: " + std::to_string(population) + '\n');
-    this->setPosition({static_cast<float>(window.getSize().x) - this->getLocalBounds().size.x - margin_top_right, margin_top_right});
-}
+        this->setString("Days expired: " + std::to_string(Core::g_anthill.day_counter) + "\n\n" +
+            "Anthill population: " + std::to_string(population) + '\n' +
+            "Anthill area: " + std::format("{:.2f}", Core::g_anthill.drawable->get_area()/10000.f) + '\n' +
+            "Food: " + std::to_string(Core::g_anthill.food_map->get_stored_food()));
+        this->setPosition({static_cast<float>(window_size.x) - this->getLocalBounds().size.x - margin_top_right, margin_top_right});
+    }
 
 }

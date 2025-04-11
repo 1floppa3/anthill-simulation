@@ -1,7 +1,11 @@
 #include "Cleaner.h"
 
-void Cleaner::work(View::AntDrawable& drawable_ant, HiveMind& hive_mind) {}
+namespace Model::Roles {
 
-Cleaner* Cleaner::clone() const {
-    return new Cleaner(*this);
+    void Cleaner::work(View::AntDrawable& drawable_ant, View::FoodMap& hive_mind) {}
+
+    Cleaner* Cleaner::clone() const {
+        return new Cleaner(*this);
+    }
+
 }

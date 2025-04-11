@@ -11,7 +11,7 @@ class FPSText final : public sf::Text {
     int frame_counter;
 
 public:
-    explicit FPSText(const sf::Font& font);
+    explicit FPSText();
     void update(const sf::Time& dt);
 };
 

@@ -1,9 +1,13 @@
 #include <iostream>
 #include "Caretaker.h"
 
-void Caretaker::work(View::AntDrawable &drawable_ant, HiveMind &hive_mind) {
-}
+namespace Model::Roles {
 
-Caretaker *Caretaker::clone() const {
-    return new Caretaker(*this);
+    void Caretaker::work(View::AntDrawable &drawable_ant, View::FoodMap &hive_mind) {
+    }
+
+    Caretaker *Caretaker::clone() const {
+        return new Caretaker(*this);
+    }
+
 }

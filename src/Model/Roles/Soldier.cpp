@@ -1,7 +1,11 @@
 #include "Soldier.h"
 
-void Soldier::work(View::AntDrawable& drawable_ant,  HiveMind& hive_mind)  {}
+namespace Model::Roles {
 
-Soldier* Soldier::clone() const {
-    return new Soldier(*this);
+    void Soldier::work(View::AntDrawable& drawable_ant, View::FoodMap& hive_mind)  {}
+
+    Soldier* Soldier::clone() const {
+        return new Soldier(*this);
+    }
+
 }

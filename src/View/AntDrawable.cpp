@@ -8,114 +8,116 @@
 
 namespace View {
 
-AntDrawable::AntDrawable(const sf::Vector2u& size, const sf::Font& font):
-texture(Utils::TextureManager::instance().get("../assets/textures/ant.png")), sprite(texture),
-animation_was_animated(false), info_text(font, "", 18) {
-    area = size;
-    sprite.setScale({sprite_scale, sprite_scale});
-    const sf::Vector2u tex_size = sprite.getTexture().getSize();
-    sprite.setOrigin({static_cast<float>(tex_size.x) / 2.f, static_cast<float>(tex_size.y) / 2.f});
+    AntDrawable::AntDrawable(const sf::Vector2u& area_):
+    texture(Utils::TextureManager::instance().get("../assets/textures/ant.png")), sprite(texture) {
+        area = area_;
+        sprite.setScale({sprite_scale, sprite_scale});
+        const sf::Vector2u tex_size = sprite.getTexture().getSize();
+        sprite.setOrigin({static_cast<float>(tex_size.x) / 2.f, static_cast<float>(tex_size.y) / 2.f});
 
-    // random pos
-    float x = Utils::Random::random(static_cast<float>(area.x));
-    float y = Utils::Random::random(static_cast<float>(area.y));
-    sprite.setPosition({x, y});
+        // random pos
+        float x = Utils::Random::random(static_cast<float>(area.x));
+        float y = Utils::Random::random(static_cast<float>(area.y));
+        sprite.setPosition({x, y});
 
-    const float angle = sf::degrees(Utils::Random::random(360.f)).asRadians();
-    velocity = {std::cos(angle) * base_speed, std::sin(angle) * base_speed};
+        const sf::Angle angle = sf::degrees(Utils::Random::random(360.f));
+        velocity = {std::cos(angle.asRadians()) * base_speed, std::sin(angle.asRadians()) * base_speed};
+    }
+    AntDrawable* AntDrawable::clone() const {
+        return new AntDrawable(*this);
+    }
 
-    info_text.setFillColor(sf::Color::White);
-    info_text.setStyle(sf::Text::Bold);
-}
+    sf::Vector2f AntDrawable::get_position() const {
+        return sprite.getPosition();
+    }
+    void AntDrawable::go_to(const sf::Vector2f& dest) {
+        const sf::Vector2f pos = sprite.getPosition();
 
-sf::Vector2f AntDrawable::get_position() const {
-    return sprite.getPosition();
-}
+        // получаем + нормируем направляющий вектор
+        sf::Vector2f dir = dest - pos;
+        if (dir.length() == 0.f)
+            return;
+        dir = dir.normalized();
 
-void AntDrawable::update(const sf::Time& dt) {
-    sf::Vector2f direction = velocity;
-    float cur_speed = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-    if (cur_speed != 0.f)
-        direction /= cur_speed;
+        // сбрасываем скорость к базовой при повороте
+        velocity = dir * base_speed;
 
-    if (Core::anthill.drawable->is_animating() && !animation_was_animated) {
-        velocity = velocity / cur_speed * (base_speed * animation_speed_multiplier);
-    } else if (!Core::anthill.drawable->is_animating()) {
+        // обновляем угол
+        sprite.setRotation(dir.angle());
+    }
+    bool AntDrawable::has_reached(const sf::Vector2f &target) const {
+        const float distance_squared = (get_position() - target).lengthSquared();
+        return distance_squared <= reach_threshold * reach_threshold;
+    }
+
+    void AntDrawable::update(const sf::Time& dt) {
+        sf::Vector2f dir = velocity;
+        float cur_speed = dir.length();
+        if (cur_speed != 0.f)
+            dir = dir.normalized();
+
         cur_speed += acceleration * dt.asSeconds();
         cur_speed = std::min(cur_speed, max_speed);
-        velocity = direction * cur_speed;
+        velocity = dir * cur_speed;
+
+        sf::Vector2f pos = sprite.getPosition();
+        pos += velocity * dt.asSeconds();
+
+        const sf::FloatRect bounds = sprite.getGlobalBounds();
+        const float half_width = bounds.size.x / 2.f;
+        const float half_height = bounds.size.y / 2.f;
+
+        bool bounced = false;
+        if (pos.x - half_width < 0.f) {
+            pos.x = half_width;
+            velocity.x = -velocity.x;
+            bounced = true;
+        } else if (pos.x + half_width > static_cast<float>(area.x)) {
+            pos.x = static_cast<float>(area.x) - half_width;
+            velocity.x = -velocity.x;
+            bounced = true;
+        }
+        if (pos.y - half_height < 0.f) {
+            pos.y = half_height;
+            velocity.y = -velocity.y;
+            bounced = true;
+        } else if (pos.y + half_height > static_cast<float>(area.y)) {
+            pos.y = static_cast<float>(area.y) - half_height;
+            velocity.y = -velocity.y;
+            bounced = true;
+        }
+
+        // сбрасываем скорость
+        if (bounced) {
+            if (velocity.length() != 0.f)
+                velocity = velocity.normalized() * base_speed;
+        }
+
+        sprite.setPosition(pos);
+        sprite.setRotation(velocity.angle());
+
+        const sf::FloatRect sprite_bounds = sprite.getGlobalBounds();
+        float desiredY = sprite.getPosition().y - sprite_bounds.size.y / 2.f - info_text.getLocalBounds().size.y - 2.f;
+        if (desiredY < 0.f)
+            desiredY = 0.f;
+
+        float textX = sprite.getPosition().x - info_text.getLocalBounds().size.x / 2.f;
+        if (textX < 0.f)
+            textX = 0.f;
+        if (textX + info_text.getLocalBounds().size.x > static_cast<float>(area.x))
+            textX = static_cast<float>(area.x) - info_text.getLocalBounds().size.x;
+
+        info_text.setPosition({ textX, desiredY });
+    }
+    void AntDrawable::update_text(const Model::Ant &ant) {
+        info_text.update(ant);
     }
 
-    sf::Vector2f pos = sprite.getPosition();
-    pos += velocity * dt.asSeconds();
-
-    const sf::FloatRect bounds = sprite.getGlobalBounds();
-    const float half_width = bounds.size.x / 2.f;
-    const float half_height = bounds.size.y / 2.f;
-
-    bool bounced = false;
-    if (pos.x - half_width < 0.f) {
-        pos.x = half_width;
-        velocity.x = -velocity.x;
-        bounced = true;
-    } else if (pos.x + half_width > static_cast<float>(area.x)) {
-        pos.x = static_cast<float>(area.x) - half_width;
-        velocity.x = -velocity.x;
-        bounced = true;
-    }
-    if (pos.y - half_height < 0.f) {
-        pos.y = half_height;
-        velocity.y = -velocity.y;
-        bounced = true;
-    } else if (pos.y + half_height > static_cast<float>(area.y)) {
-        pos.y = static_cast<float>(area.y) - half_height;
-        velocity.y = -velocity.y;
-        bounced = true;
+    void AntDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        target.draw(info_text, states);
+        states.texture = &texture;
+        target.draw(sprite, states);
     }
 
-    if (bounced && !animation_was_animated && !Core::anthill.drawable->is_animating()) {
-        const float norm = std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
-        if (norm != 0.f)
-            velocity = velocity / norm * base_speed;
-    }
-
-    sprite.setPosition(pos);
-    const sf::Angle angle = sf::radians(std::atan2(velocity.y, velocity.x));
-    sprite.setRotation(sf::degrees(angle.asDegrees()));
-    animation_was_animated = Core::anthill.drawable->is_animating();
-    update_info_position();
-}
-void AntDrawable::set_info(const std::string &info) {
-    info_text.setString(info);
-}
-
-void AntDrawable::update_info_position() {
-    const sf::FloatRect sprite_bounds = sprite.getGlobalBounds();
-    info_text.setPosition({sprite.getPosition().x - info_text.getLocalBounds().size.x/2.f,
-                         sprite.getPosition().y - sprite_bounds.size.y/2.f - static_cast<float>(info_text.getCharacterSize()) - 2.f});
-}
-
-void AntDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(info_text, states);
-    states.texture = &texture;
-    target.draw(sprite, states);
-}
-
-AntDrawable* AntDrawable::clone() const {
-    return new AntDrawable(*this);
-}
-
-void AntDrawable::go_to(float x, float y) {
-    sf::Vector2f pos = sprite.getPosition();
-    float dx = x - pos.x;
-    float dy = y - pos.y;
-    float d = std::sqrt(dx*dx+dy*dy);
-    if(d == 0)
-        return;
-    float vx = dx/d;
-    float vy = dy/d;
-    velocity.x = vx;
-    velocity.y = vy;
-}
 
 }

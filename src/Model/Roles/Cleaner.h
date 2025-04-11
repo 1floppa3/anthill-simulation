@@ -2,13 +2,17 @@
 
 #include "Role.h"
 
-class Cleaner final : public Role {
-public:
-    void work(View::AntDrawable &drawable_ant, HiveMind &hive_mind) override;
+namespace Model::Roles {
 
-    [[nodiscard]] Cleaner *clone() const override;
+    class Cleaner final : public Role {
+    public:
+        void work(View::AntDrawable &drawable_ant, View::FoodMap &hive_mind) override;
 
-    [[nodiscard]] std::string get_name() const override {
-        return "Cleaner";
-    }
-};
+        [[nodiscard]] Cleaner *clone() const override;
+
+        [[nodiscard]] std::string get_name() const override {
+            return "Cleaner";
+        }
+    };
+
+}

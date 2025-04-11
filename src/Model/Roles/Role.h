@@ -1,12 +1,18 @@
 #pragma once
 
-#include "../../View/AntDrawable.h"
-#include "../HiveMind.h"
+#include "../../View/FoodMap.h"
+#include <string>
 
-class Role {
-public:
-    virtual ~Role() = default;
-    virtual void work(View::AntDrawable& drawable_ant, HiveMind& hive_mind) = 0;
-    [[nodiscard]] virtual Role* clone() const = 0;
-    [[nodiscard]] virtual std::string get_name() const = 0;
-};
+#include "../../View/AntDrawable.h"
+
+namespace Model::Roles {
+
+    class Role {
+    public:
+        virtual ~Role() = default;
+        virtual void work(View::AntDrawable& drawable_ant, View::FoodMap& hive_mind) = 0;
+        [[nodiscard]] virtual Role* clone() const = 0;
+        [[nodiscard]] virtual std::string get_name() const = 0;
+    };
+
+}

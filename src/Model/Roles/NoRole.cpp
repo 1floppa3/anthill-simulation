@@ -1,5 +1,9 @@
 #include "NoRole.h"
 
-NoRole* NoRole::clone()const {
-    return new NoRole(*this);
+namespace Model::Roles {
+
+    NoRole* NoRole::clone() const {
+        return new NoRole(*this);
+    }
+
 }

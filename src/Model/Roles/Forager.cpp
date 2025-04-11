@@ -1,37 +1,40 @@
-#include <iostream>
 #include "Forager.h"
 
-void Forager::work(View::AntDrawable &drawable_ant, HiveMind &hive_mind) {
-    auto [x, y] = drawable_ant.get_position();
-    if (food_point == nullptr && !is_bringing) {
-        FoodPoint *new_food_point = hive_mind.get_food_point();
-        if (new_food_point != nullptr) {
-            food_point = new_food_point;
-            drawable_ant.go_to(food_point->x, food_point->y);
-        }
-    }
+#include "../../Core/Simulation.h"
 
-    if (food_point != nullptr && !is_bringing) {
-        if (food_point->compare_coords(x, y)) {
-            food_point->take_food();
-            is_bringing = true;
-            drawable_ant.go_to(hive_mind.x_anthill, hive_mind.y_anthill);
-            if (food_point->is_empty()) {
-                hive_mind.remove_point(food_point);
-                food_point = nullptr;
+namespace Model::Roles {
+
+    void Forager::work(View::AntDrawable &drawable_ant, View::FoodMap &food_map) {
+        const sf::Vector2f anthill_pos = Core::g_anthill.drawable->get_position();
+
+        if (!is_bringing) {
+            if (!food_point) {
+                View::FoodPoint* new_food_point = food_map.find_closest_food(drawable_ant);
+                if (new_food_point != nullptr) {
+                    food_point = new_food_point;
+                    drawable_ant.go_to(food_point->getPosition());
+                }
+            } else {
+                if (drawable_ant.has_reached(food_point->getPosition())) {
+                    is_bringing = true;
+                    drawable_ant.go_to(anthill_pos);
+                }
             }
-        };
-    }
-
-    if (is_bringing) {
-        if (std::abs(hive_mind.x_anthill - x) < 40 && std::abs(hive_mind.y_anthill - y) < 40) {
-            is_bringing = false;
+        }
+        else {
+            food_point->setPosition(drawable_ant.get_position());
+            if (drawable_ant.has_reached(anthill_pos)) {
+                food_map.store_food(food_point);
+                food_point = nullptr;
+                is_bringing = false;
+            }
         }
     }
-}
 
-Forager::Forager() : food_point(nullptr), is_bringing(false) {}
+    Forager::Forager() : food_point(nullptr), is_bringing(false) {}
 
-Forager *Forager::clone() const {
-    return new Forager(*this);
+    Forager *Forager::clone() const {
+        return new Forager(*this);
+    }
+
 }

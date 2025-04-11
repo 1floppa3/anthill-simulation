@@ -7,18 +7,16 @@
 
 namespace View::UI {
 
-class HUD final : public sf::Drawable {
-    const sf::RenderWindow* window;
+    class HUD final : public sf::Drawable {
+        sf::Vector2u window_size;
 
-    AnthillInfoText anthill_info_text;
-    FPSText fps_text;
+        AnthillInfoText anthill_info_text;
+        FPSText fps_text;
 
-public:
-    HUD(const sf::RenderWindow& w, const sf::Font& f);
-
-    void update(const sf::Time& dt);
-
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-};
+    public:
+        explicit HUD(const sf::Vector2u& size);
+        void update(const sf::Time& dt);
+        void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    };
 
 }

@@ -2,13 +2,17 @@
 
 #include "Role.h"
 
-class Caretaker final : public Role {
-public:
-    void work(View::AntDrawable &drawable_ant, HiveMind &hive_mind) override;
+namespace Model::Roles {
 
-    [[nodiscard]] Caretaker *clone() const override;
+    class Caretaker final : public Role {
+    public:
+        void work(View::AntDrawable &drawable_ant, View::FoodMap &hive_mind) override;
 
-    [[nodiscard]] std::string get_name() const override {
-        return "Caretaker";
-    }
-};
+        [[nodiscard]] Caretaker *clone() const override;
+
+        [[nodiscard]] std::string get_name() const override {
+            return "Caretaker";
+        }
+    };
+
+}
