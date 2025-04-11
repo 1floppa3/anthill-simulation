@@ -4,6 +4,7 @@
 #include <map>
 #include "Ant.h"
 #include "../View/AnthillDrawable.h"
+#include "HiveMind.h"
 
 enum class ResourceType {
     FOOD,
@@ -24,9 +25,11 @@ class Anthill {
     int rank;
     std::map<ResourceType, int> resources;
 public:
+    HiveMind hive_mind;
+
     int day_counter;
-    std::list<Ant> ants;
     View::AnthillDrawable* drawable;
+    std::list<Ant> ants;
 
     Anthill(int rank);
 
@@ -39,4 +42,6 @@ public:
     void maintain_anthill();
 
     void update_size();
+
+    void iterate_ants(void (const Ant& ant));
 };

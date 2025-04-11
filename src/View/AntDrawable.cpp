@@ -1,7 +1,6 @@
 #include "AntDrawable.h"
 
 #include <cmath>
-
 #include "AnthillDrawable.h"
 #include "../Core/Simulation.h"
 #include "../Utils/Random.h"
@@ -104,6 +103,19 @@ void AntDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 
 AntDrawable* AntDrawable::clone() const {
     return new AntDrawable(*this);
+}
+
+void AntDrawable::go_to(float x, float y) {
+    sf::Vector2f pos = sprite.getPosition();
+    float dx = x - pos.x;
+    float dy = y - pos.y;
+    float d = std::sqrt(dx*dx+dy*dy);
+    if(d == 0)
+        return;
+    float vx = dx/d;
+    float vy = dy/d;
+    velocity.x = vx;
+    velocity.y = vy;
 }
 
 }

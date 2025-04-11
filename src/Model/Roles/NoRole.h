@@ -5,8 +5,7 @@
 
 class NoRole final : public Role {
 public:
-    void work(View::AntDrawable& drawable_ant) const override {
-        std::cout << drawable_ant.get_position().x;
+    void work(View::AntDrawable& drawable_ant, HiveMind& hive_mind) override {
     }
 
     [[nodiscard]] NoRole* clone() const override;

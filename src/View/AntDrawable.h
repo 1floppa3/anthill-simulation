@@ -5,7 +5,7 @@
 namespace View {
 
 class AntDrawable final : public sf::Drawable {
-    const float base_speed = 50.f;
+    const float base_speed = 2.f;
     const float sprite_scale = 0.08f;
     const float acceleration = 200.f;
     const float max_speed = 100.f;
@@ -22,6 +22,8 @@ public:
     explicit AntDrawable(const sf::Vector2u& size, const sf::Font& font);
 
     sf::Vector2f get_position() const;
+
+    void go_to(float x, float y);
 
     void update(const sf::Time& dt);
     void set_info(const std::string &info);

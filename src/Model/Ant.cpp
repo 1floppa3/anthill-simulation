@@ -7,18 +7,18 @@
 #include "Roles/NoRole.h"
 
 
-Ant::Ant(const int age, const int health, const sf::Vector2u& area, const sf::Font& font):
-age(age), health(health), role(new NoRole), drawable(new View::AntDrawable(area, font)) {
-    std::cout << "New ant with age " << age << '\n';
+Ant::Ant(const int age, const int health, const sf::Vector2u &area, const sf::Font &font) :
+        age(age), health(health), role(new NoRole), drawable(new View::AntDrawable(area, font)) {
+//    std::cout << "New ant with age " << age << '\n';
 }
 
-Ant::Ant(const Ant& other):
-age(other.age), health(other.health),
-role(other.role ? other.role->clone() : nullptr), drawable(other.drawable ? other.drawable->clone() : nullptr) {
-    std::cout << "Copy ant with age " << other.age << '\n';
+Ant::Ant(const Ant &other) :
+        age(other.age), health(other.health),
+        role(other.role ? other.role->clone() : nullptr), drawable(other.drawable ? other.drawable->clone() : nullptr) {
+//    std::cout << "Copy ant with age " << other.age << '\n';
 }
 
-Ant& Ant::operator=(const Ant& other) {
+Ant &Ant::operator=(const Ant &other) {
     if (this != &other) {
         age = other.age;
         health = other.health;
@@ -31,13 +31,13 @@ Ant& Ant::operator=(const Ant& other) {
 }
 
 Ant::~Ant() {
-    std::cout << "Delete ant with age " << age << '\n';
+//    std::cout << "Delete ant with age " << age << '\n';
     delete role;
     delete drawable;
 }
 
-void Ant::do_work() const {
-    role->work(*drawable);
+void Ant::do_work(HiveMind &hive_mind) const {
+    role->work(*drawable, hive_mind);
 }
 
 void Ant::update_role() {
@@ -50,17 +50,20 @@ void Ant::update_role() {
 
 // TODO: change
 Role *Ant::get_new_role() const {
-    if (age > 40 && dynamic_cast<Cleaner *>(role) == nullptr)
-        return new Cleaner;
-    if (age > 30 && dynamic_cast<Forager *>(role) == nullptr)
+    if(age > 5 && dynamic_cast<Forager *>(role) == nullptr)
         return new Forager;
-    if (age > 20 && dynamic_cast<Soldier *>(role) == nullptr)
-        return new Soldier;
-    if (age > 10 && dynamic_cast<Caretaker *>(role) == nullptr)
-        return new Caretaker;
-    if (dynamic_cast<NoRole *>(role) == nullptr)
-        return new NoRole;
     return nullptr;
+//    if (age > 40 && dynamic_cast<Cleaner *>(role) == nullptr)
+//        return new Cleaner;
+//    if (age > 30 && age < 40 && dynamic_cast<Forager *>(role) == nullptr)
+//        return new Forager;
+//    if (age > 20 && age < 30 && dynamic_cast<Soldier *>(role) == nullptr)
+//        return new Soldier;
+//    if (age > 10 && age < 20 && dynamic_cast<Caretaker *>(role) == nullptr)
+//        return new Caretaker;
+//    if (age < 10 && dynamic_cast<NoRole *>(role) == nullptr)
+//        return new NoRole;
+//    return nullptr;
 }
 
 bool Ant::is_alive() const {

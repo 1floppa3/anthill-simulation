@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Roles/Role.h"
+#include "HiveMind.h"
 
 class Ant {
-    void update_role();
     [[nodiscard]] Role *get_new_role() const;
 
 public:
@@ -18,7 +18,8 @@ public:
 
     ~Ant();
 
-    void do_work() const;
+    void do_work(HiveMind& hive_mind) const;
+    void update_role();
 
     [[nodiscard]] bool is_alive() const;
 };

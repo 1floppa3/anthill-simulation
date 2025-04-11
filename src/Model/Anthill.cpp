@@ -3,17 +3,17 @@
 Anthill::Anthill(int rank) : rank(rank), drawable(new View::AnthillDrawable()) {}
 
 Anthill::Anthill() : rank(1), drawable(new View::AnthillDrawable()) {
-    for (int i = 0; i < 10; ++i) {
-//        ants.emplace(1, 1, AntDrawable(5));
-    }
 }
 
 void Anthill::simulate_day() {
     if (rank <= 0)
         return;
-
+    ++day_counter;
     for (auto &ant: ants) {
-        ant.do_work();
+//        --ant.health;
+        ++ant.age;
+        ant.do_work(hive_mind);
+        ant.update_role();
     }
 
     // Remove killed ants
@@ -24,10 +24,10 @@ void Anthill::simulate_day() {
             ++it;
     }
 
-    aliment_ants();
-    maintain_anthill();
-
-    update_size();
+//    aliment_ants();
+//    maintain_anthill();
+//
+//    update_size();
 }
 
 void Anthill::update_size() {
@@ -47,4 +47,10 @@ void Anthill::maintain_anthill() {
 
 void Anthill::aliment_ants(){
 
+}
+
+void Anthill::iterate_ants(void f(const Ant &)) {
+    for (auto & ant : ants) {
+        f(ant);
+    }
 }
