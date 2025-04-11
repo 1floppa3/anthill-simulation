@@ -6,7 +6,7 @@ namespace View {
 
     class AnthillDrawable final : public sf::Drawable {
         const float window_margin = 25.f;
-        const int contour_points = 20;
+        static constexpr int contour_points = 20;
         const float init_point_dist = 60.f;
         const float init_min_dist = .8f;
         const float init_max_dist = 1.2f;
