@@ -18,6 +18,10 @@ namespace View {
     int FoodMap::get_stored_food() const {
         return stored_food;
     }
+    void FoodMap::add_food(FoodPoint* food_point) {
+        if(food_points.count(food_point) == 0)
+            food_points[food_point] = false;
+    }
 
     void FoodMap::spend_meal() {
         --stored_food;
@@ -30,7 +34,6 @@ namespace View {
         for (auto &food: food_points) {
             if (food.second)
                 continue;
-
             const float distance_squared = (food.first->getPosition() - drawable.get_position()).lengthSquared();
             if (distance_squared < min_distance_squared) {
                 min_distance_squared = distance_squared;
