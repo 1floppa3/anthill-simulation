@@ -3,62 +3,50 @@
 
 namespace View {
 
-    void FoodMap::generate_food(const sf::Vector2f& area) {
-        const Food new_food = {
-            new FoodPoint({Utils::Random::random(area_margin, area.x - area_margin),
-                                        Utils::Random::random(area_margin, area.y - area_margin)}),
-            false
-        };
-        food_points.push_back(new_food);
+    void FoodMap::generate_food(const sf::Vector2f &area) {
+        FoodPoint *new_food =new FoodPoint({Utils::Random::random(area_margin, area.x - area_margin),
+                               Utils::Random::random(area_margin, area.y - area_margin)});
+        food_points[new_food] = false;
     }
-    void FoodMap::add_food(FoodPoint* food_point) {
-        const Food new_food = {food_point, false};
-        food_points.push_back(new_food);
-    }
-    void FoodMap::store_food(const FoodPoint* food_point) {
+
+    void FoodMap::store_food(FoodPoint *food_point) {
         ++stored_food;
-        for (auto it = food_points.begin(); it != food_points.end(); ) {
-            if (it->point == food_point) {
-                delete it->point;
-                it = food_points.erase(it);
-            } else {
-                ++it;
-            }
-        }
+        delete food_point;
+        food_points.erase(food_point);
     }
 
     int FoodMap::get_stored_food() const {
         return stored_food;
     }
+
     void FoodMap::spend_meal() {
         --stored_food;
     }
 
-    FoodPoint* FoodMap::find_closest_food(const AntDrawable& drawable) {
-        Food* closest_food = nullptr;
+    FoodPoint *FoodMap::find_closest_food(const AntDrawable &drawable) {
+        FoodPoint *closest_food = nullptr;
         float min_distance_squared = std::numeric_limits<float>::max();
 
         for (auto &food: food_points) {
-            if (food.reserved || food.point == nullptr)
+            if (food.second)
                 continue;
 
-            const float distance_squared = (food.point->getPosition() - drawable.get_position()).lengthSquared();
+            const float distance_squared = (food.first->getPosition() - drawable.get_position()).lengthSquared();
             if (distance_squared < min_distance_squared) {
                 min_distance_squared = distance_squared;
-                closest_food = &food;
+                closest_food = food.first;
             }
         }
 
         if (closest_food) {
-            closest_food->reserved = true;
-            return closest_food->point;
+            food_points[closest_food] = true;
+            return closest_food;
         }
-
         return nullptr;
     }
 
-    void FoodMap::draw(sf::RenderTarget& target, const sf::RenderStates states) const {
-        for (const auto&[point, reserved]: food_points) {
+    void FoodMap::draw(sf::RenderTarget &target, const sf::RenderStates states) const {
+        for (const auto &[point, reserved]: food_points) {
             target.draw(*point, states);
         }
     }
