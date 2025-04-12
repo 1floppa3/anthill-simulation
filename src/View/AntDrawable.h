@@ -20,6 +20,8 @@ namespace View {
 
         UI::AntInfoText info_text;
     public:
+        float object_detection_area = 100;
+
         explicit AntDrawable(const sf::Vector2u& area_);
         AntDrawable* clone() const;
 

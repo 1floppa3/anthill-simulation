@@ -7,7 +7,6 @@
 namespace View {
 
     class FoodMap final : public sf::Drawable {
-        const float area_margin = 50.f;
 
         std::map<FoodPoint*, bool> food_points;
         int stored_food = 0;

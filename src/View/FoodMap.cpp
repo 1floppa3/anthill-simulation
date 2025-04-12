@@ -1,14 +1,8 @@
+#include <iostream>
 #include "../View/FoodMap.h"
 #include "../Utils/Random.h"
 
 namespace View {
-
-    void FoodMap::generate_food(const sf::Vector2f &area) {
-        FoodPoint *new_food =new FoodPoint({Utils::Random::random(area_margin, area.x - area_margin),
-                               Utils::Random::random(area_margin, area.y - area_margin)});
-        food_points[new_food] = false;
-    }
-
     void FoodMap::store_food(FoodPoint *food_point) {
         ++stored_food;
         delete food_point;
@@ -21,6 +15,8 @@ namespace View {
     void FoodMap::add_food(FoodPoint* food_point) {
         if(food_points.count(food_point) == 0)
             food_points[food_point] = false;
+        else
+            std::cout << "smth wrong food event_manager";
     }
 
     void FoodMap::spend_meal() {

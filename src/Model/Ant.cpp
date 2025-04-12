@@ -40,6 +40,10 @@ namespace Model {
         role->work(*drawable, food_map);
     }
 
+    void Ant::detect_objects(Core::EventManager& event_manager) const {
+        role->detect_objects(*drawable, event_manager);
+    }
+
     void Ant::update_role() {
         Roles::Role *temp = get_new_role();
         if (temp != nullptr) {

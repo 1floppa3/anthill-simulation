@@ -24,6 +24,7 @@ namespace Model {
         ~Ant();
 
         void do_work(View::FoodMap& food_map) const;
+        void detect_objects(Core::EventManager& event_manager) const;
         void update_role();
 
         [[nodiscard]] bool is_alive() const;

@@ -1,6 +1,7 @@
 #include "Simulation.h"
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "../Model/Ant.h"
 #include "../Utils/Random.h"
@@ -12,6 +13,7 @@
 namespace Core {
 
     Simulation::Simulation(const sf::Vector2u &res): resolution(res) {
+        g_event_manager.set_food_map(g_anthill.food_map);
         window = sf::RenderWindow(sf::VideoMode(resolution), title, sf::Style::Default, sf::State::Fullscreen);
         window.setVerticalSyncEnabled(true); // ограничит фпс до герцовки
         window.setIcon(sf::Image("../assets/ico.png"));
@@ -37,7 +39,7 @@ namespace Core {
                     if (keycode == sf::Keyboard::Scancode::Escape) {
                         window.close();
                     } else if (keycode == sf::Keyboard::Scancode::Up) {
-                        g_anthill.food_map->generate_food(sf::Vector2f(resolution));
+                        g_event_manager.generate_food(sf::Vector2f(resolution));
                     }
                 }
             }
@@ -52,6 +54,7 @@ namespace Core {
             g_anthill.drawable->update(dt);
             for (const Model::Ant &ant: g_anthill.ants) {
                 if (ant.is_alive()) {
+                    ant.detect_objects(g_event_manager);
                     ant.do_work(*g_anthill.food_map);
                     ant.drawable->update_text(ant);
                     ant.drawable->update(dt);
@@ -64,6 +67,9 @@ namespace Core {
             window.draw(*g_anthill.drawable);
             for (const Model::Ant &ant: g_anthill.ants) window.draw(*ant.drawable);
             window.draw(*g_anthill.food_map);
+            for (auto it = g_event_manager.undetected_food.begin(); it !=  g_event_manager.undetected_food.end(); ++it) {
+                window.draw(**it);
+            }
             window.draw(hud);
             window.display();
         }

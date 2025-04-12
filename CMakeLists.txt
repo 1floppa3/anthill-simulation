@@ -44,6 +44,9 @@ add_executable(
         src/View/UI/AntInfoText.h
         src/View/UI/Logger.cpp
         src/View/UI/Logger.h
+        src/Core/EventManager.cpp
+        src/Core/EventManager.h
+        src/Model/Roles/Role.cpp
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)
