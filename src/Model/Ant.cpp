@@ -31,9 +31,9 @@ namespace Model {
     }
 
     Ant::~Ant() {
+        Core::g_logger.add_message("Ant #" + std::to_string(id) + " is dead. Role: " + role->get_name() + '.');
         delete role;
         delete drawable;
-        Core::g_logger.add_message("Ant #" + std::to_string(id) + " is dead. Role: " + role->get_name() + '.');
     }
 
     void Ant::do_work(View::FoodMap &food_map) const {
