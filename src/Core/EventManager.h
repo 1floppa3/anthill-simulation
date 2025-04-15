@@ -19,10 +19,11 @@ namespace Core{
         void set_hive_mind(Model::HiveMind* hive_mind);
 
         void generate_food(const sf::Vector2f &area);
-        void detect_food(View::AntDrawable& ant_drawable);
 
         void generate_wood(const sf::Vector2f &area);
-        void detect_wood(View::AntDrawable& ant_drawable);
+
+
+        void detect_objects(View::AntDrawable& ant_drawable);
 //        Enemy enemies;
 //        WoodMap woodMap;
 // и тд тут храним все о чем временно не знаю муравьи

@@ -16,12 +16,28 @@ namespace Core {
                                                          Utils::Random::random(area_margin, area.y - area_margin)});
         undetected_food.push_back(new_food);
     }
+    void EventManager::generate_wood(const sf::Vector2f &area) {
+        View::WoodPoint *new_wood = new View::WoodPoint({Utils::Random::random(area_margin, area.x - area_margin),
+                                                         Utils::Random::random(area_margin, area.y - area_margin)});
+        undetected_wood.push_back(new_wood);
+    }
 
-    void EventManager::detect_food(View::AntDrawable &ant_drawable) {
+    void EventManager::detect_objects(View::AntDrawable &ant_drawable) {
         auto [x, y] = ant_drawable.get_position();
         float x_left_up = x - ant_drawable.object_detection_area, y_left_up = y - ant_drawable.object_detection_area;
         float x_right_down = x + ant_drawable.object_detection_area, y_right_down =
                 y + ant_drawable.object_detection_area;
+
+        for (auto it = undetected_wood.begin(); it != undetected_wood.end();) {
+            auto [f_x, f_y] = (*it)->get_pos();
+            if (x_left_up <= f_x && f_x <= x_right_down &&
+                y_left_up <= f_y && f_y <= y_right_down) {
+                hive_mind->add_wood(*it);
+                it = undetected_wood.erase(it);
+            } else
+                ++it;
+        }
+
         for (auto it = undetected_food.begin(); it != undetected_food.end();) {
             auto [f_x, f_y] = (*it)->get_pos();
             if (x_left_up <= f_x && f_x <= x_right_down &&
@@ -32,27 +48,4 @@ namespace Core {
                 ++it;
         }
     }
-
-    void EventManager::generate_wood(const sf::Vector2f &area) {
-        View::WoodPoint *new_wood = new View::WoodPoint({Utils::Random::random(area_margin, area.x - area_margin),
-                                                         Utils::Random::random(area_margin, area.y - area_margin)});
-        undetected_wood.push_back(new_wood);
-    }
-
-    void EventManager::detect_wood(View::AntDrawable &ant_drawable) {
-        auto [x, y] = ant_drawable.get_position();
-        float x_left_up = x - ant_drawable.object_detection_area, y_left_up = y - ant_drawable.object_detection_area;
-        float x_right_down = x + ant_drawable.object_detection_area, y_right_down =
-                y + ant_drawable.object_detection_area;
-        for (auto it = undetected_wood.begin(); it != undetected_wood.end();) {
-            auto [f_x, f_y] = (*it)->get_pos();
-            if (x_left_up <= f_x && f_x <= x_right_down &&
-                y_left_up <= f_y && f_y <= y_right_down) {
-                hive_mind->add_wood(*it);
-                it = undetected_wood.erase(it);
-            } else
-                ++it;
-        }
-    }
-
 }
