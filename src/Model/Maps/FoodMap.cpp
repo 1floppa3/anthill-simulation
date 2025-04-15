@@ -1,7 +1,5 @@
 #include <iostream>
 #include "FoodMap.h"
-#include "../../Utils/Random.h"
-
 
 namespace Model {
     Model::FoodMap::FoodMap(Model::Store& store):store(store){};
