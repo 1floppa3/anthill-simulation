@@ -14,6 +14,7 @@ namespace Model::Roles {
         void detect_objects(View::AntDrawable& drawable_ant, Core::EventManager& event_manager);
         [[nodiscard]] virtual Role* clone() const = 0;
         [[nodiscard]] virtual std::string get_name() const = 0;
+        [[nodiscard]] virtual sf::Color get_ant_color() const = 0;
     };
 
 }

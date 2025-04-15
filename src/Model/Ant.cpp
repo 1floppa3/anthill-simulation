@@ -52,6 +52,7 @@ namespace Model {
             delete role;
             role = temp;
             Core::g_logger.add_message("Ant #" + std::to_string(id) + " got new role: " + role->get_name() + '.');
+            drawable->set_color(role->get_ant_color());
         }
     }
 

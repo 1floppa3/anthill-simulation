@@ -14,6 +14,9 @@ namespace Model::Roles {
         [[nodiscard]] std::string get_name() const override {
             return "Forager";
         }
+        [[nodiscard]] sf::Color get_ant_color() const override {
+            return sf::Color::Blue;
+        }
     };
 
 }
