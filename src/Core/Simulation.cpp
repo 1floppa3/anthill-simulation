@@ -56,8 +56,8 @@ namespace Core {
             if (!anthill.drawable->is_animating()) {
                 anthill.drawable->expand();
                 if (anthill.ants.size() < 10)
-                    anthill.ants.emplace_back(0, Utils::Random::random(10, 40), resolution, general_font);
-                anthill.simulate_day();
+                    anthill.ants.emplace_back(0, Utils::Random::random(10, 40), resolution, general_font); // Change to Game.spawn_ant method
+                anthill.simulate_day(); // Change to Game
             }
 
             dt = clock.restart();

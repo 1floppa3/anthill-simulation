@@ -36,6 +36,14 @@ Ant::~Ant() {
     delete drawable;
 }
 
+void Ant::deal_damage(int damage)
+{
+    if (damage >= health)
+        health = 0;
+    else
+        health -= damage;
+}
+
 void Ant::do_work(HiveMind &hive_mind) const {
     role->work(*drawable, hive_mind);
 }

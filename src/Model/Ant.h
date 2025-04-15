@@ -2,8 +2,9 @@
 
 #include "Roles/Role.h"
 #include "HiveMind.h"
+#include "IAttackable.h"
 
-class Ant {
+class Ant : public IAttackable {
     [[nodiscard]] Role *get_new_role() const;
 
 public:
@@ -18,6 +19,10 @@ public:
 
     ~Ant();
 
+    sf::Vector2f get_position() const override { return drawable->get_position(); }
+
+    void deal_damage(int damage) override;
+    
     void do_work(HiveMind& hive_mind) const;
     void update_role();
 

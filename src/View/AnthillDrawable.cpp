@@ -1,6 +1,7 @@
 #include "AnthillDrawable.h"
 
 #include <cmath>
+#include <numbers>
 
 #include "../Utils/Random.h"
 #include "../Utils/TextureManager.h"
