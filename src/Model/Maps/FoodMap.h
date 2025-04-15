@@ -1,18 +1,16 @@
 #pragma once
 
 #include <map>
-#include "../../View/FoodPoint.h"
+#include "../../View/Points/FoodPoint.h"
 #include "../../View/AntDrawable.h"
 #include "../Store.h"
+#include "Map.h"
 
 namespace Model {
 
-    class FoodMap final : public sf::Drawable {
-
-        std::map<View::FoodPoint*, bool> food_points;
-        Model::Store& store;
+    class FoodMap final : public Map {
     public:
-        FoodMap(Model::Store& store);
+        explicit FoodMap(Model::Store& store);
         void add_food(View::FoodPoint* food_point);
         void store_food(View::FoodPoint* food_point);
 

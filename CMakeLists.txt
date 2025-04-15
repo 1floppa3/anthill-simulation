@@ -34,8 +34,8 @@ add_executable(
     src/View/UI/HUD.cpp
     src/View/UI/FPSText.cpp
     src/View/UI/FPSText.h
-        src/View/FoodPoint.cpp
-        src/View/FoodPoint.h
+        src/View/Points/FoodPoint.cpp
+        src/View/Points/FoodPoint.h
         src/Model/Maps/FoodMap.cpp
         src/Model/Maps/FoodMap.h
         src/View/Background.cpp
@@ -51,10 +51,14 @@ add_executable(
         src/Model/HiveMind.h
         src/Model/Store.cpp
         src/Model/Store.h
-        src/View/WoodPoint.cpp
-        src/View/WoodPoint.h
+        src/View/Points/WoodPoint.cpp
+        src/View/Points/WoodPoint.h
         src/Model/Maps/WoodMap.h
         src/Model/Maps/WoodMap.cpp
+        src/View/Points/Point.cpp
+        src/View/Points/Point.h
+        src/Model/Maps/Map.cpp
+        src/Model/Maps/Map.h
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)

@@ -1,8 +1,8 @@
 #ifndef ANTHILL_SIMULATION_EVENTMANAGER_H
 #define ANTHILL_SIMULATION_EVENTMANAGER_H
 #include "../Model/HiveMind.h"
-#include "../View/FoodPoint.h"
-#include "../View/WoodPoint.h"
+#include "../View/Points/FoodPoint.h"
+#include "../View/Points/WoodPoint.h"
 #include "../View/AntDrawable.h"
 #include <list>
 
@@ -13,7 +13,6 @@ namespace Core{
         const float area_margin = 50.f;
     public:
         Model::HiveMind* hive_mind;
-//        Model::FoodMap* food_map;
         std::list<View::FoodPoint*> undetected_food;
         std::list<View::WoodPoint*> undetected_wood;
 

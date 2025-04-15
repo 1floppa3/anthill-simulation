@@ -2,7 +2,7 @@
 #define ANTHILL_SIMULATION_HIVEMIND_H
 
 #include "Maps/FoodMap.h"
-#include "../View/WoodPoint.h"
+#include "../View/Points/WoodPoint.h"
 #include "Maps/WoodMap.h"
 
 namespace Model{

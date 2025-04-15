@@ -1,8 +1,8 @@
 #include <iostream>
 #include "EventManager.h"
 #include "../Model/HiveMind.h"
-#include "../View/FoodPoint.h"
-#include "../View/WoodPoint.h"
+#include "../View/Points/FoodPoint.h"
+#include "../View/Points/WoodPoint.h"
 #include "../Utils/Random.h"
 
 namespace Core {
