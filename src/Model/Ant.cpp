@@ -1,6 +1,7 @@
 #include "Ant.h"
 
 #include "../Core/Simulation.h"
+#include "../Utils/Color.h"
 #include "../Utils/Random.h"
 #include "Roles/Cleaner.h"
 #include "Roles/Forager.h"
@@ -51,8 +52,9 @@ namespace Model {
         if (temp != nullptr) {
             delete role;
             role = temp;
-            Core::g_logger.add_message("Ant #" + std::to_string(id) + " got new role: " + role->get_name() + '.');
-            drawable->set_color(role->get_ant_color());
+            const sf::Color color = role->get_ant_color();
+            Core::g_logger.add_message("Ant #" + std::to_string(id) + " got new role: <color=" + Utils::color_to_hex(color) + ">" + role->get_name() + "</color>.");
+            drawable->set_color(color);
         }
     }
 

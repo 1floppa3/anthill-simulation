@@ -59,6 +59,7 @@ add_executable(
         src/View/Points/Point.h
         src/Model/Maps/Map.cpp
         src/Model/Maps/Map.h
+        src/Utils/Color.h
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)
