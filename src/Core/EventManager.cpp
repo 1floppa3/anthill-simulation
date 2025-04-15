@@ -29,7 +29,7 @@ namespace Core {
                 y + ant_drawable.object_detection_area;
 
         for (auto it = undetected_wood.begin(); it != undetected_wood.end();) {
-            auto [f_x, f_y] = (*it)->get_pos();
+            auto [f_x, f_y] = (*it)->getPosition();
             if (x_left_up <= f_x && f_x <= x_right_down &&
                 y_left_up <= f_y && f_y <= y_right_down) {
                 hive_mind->add_wood(*it);
@@ -39,7 +39,7 @@ namespace Core {
         }
 
         for (auto it = undetected_food.begin(); it != undetected_food.end();) {
-            auto [f_x, f_y] = (*it)->get_pos();
+            auto [f_x, f_y] = (*it)->getPosition();
             if (x_left_up <= f_x && f_x <= x_right_down &&
                 y_left_up <= f_y && f_y <= y_right_down) {
                 hive_mind->add_food(*it);

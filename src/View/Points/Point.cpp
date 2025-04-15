@@ -3,13 +3,10 @@
 
 namespace View {
 
-    Point::Point(const sf::Vector2f& pos): CircleShape(radius), pos(pos) {
+    Point::Point(const sf::Vector2f& pos): CircleShape(radius) {
         this->setPosition(pos);
         this->setOrigin({radius, radius});
         this->setFillColor(sf::Color::White);
     }
 
-    sf::Vector2f Point::get_pos() {
-        return pos;
-    }
 }

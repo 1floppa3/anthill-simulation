@@ -7,10 +7,8 @@ namespace View {
 
     class Point: public sf::CircleShape {
         static constexpr float radius = 5.f;
-        const sf::Vector2f pos;
     public:
         explicit Point(const sf::Vector2f &pos);
-        sf::Vector2f get_pos();
     };
 }
 

@@ -38,11 +38,9 @@ namespace Core {
                     const sf::Keyboard::Scancode keycode = keyPressed->scancode;
                     if (keycode == sf::Keyboard::Scancode::Escape) {
                         window.close();
-                    } else if (keycode == sf::Keyboard::Scancode::Up) {
+                    } else if (keycode == sf::Keyboard::Scancode::Up || keycode == sf::Keyboard::Scancode::Num1) {
                         g_event_manager.generate_food(sf::Vector2f(resolution));
-                    }else if (keycode == sf::Keyboard::Scancode::Num1) {
-                        g_event_manager.generate_food(sf::Vector2f(resolution));
-                    }else if (keycode == sf::Keyboard::Scancode::Num2) {
+                    } else if (keycode == sf::Keyboard::Scancode::Down || keycode == sf::Keyboard::Scancode::Num2) {
                         g_event_manager.generate_wood(sf::Vector2f(resolution));
                     }
                 }
