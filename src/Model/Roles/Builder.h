@@ -15,7 +15,7 @@ namespace Model::Roles {
             return "Builder";
         }
         [[nodiscard]] sf::Color get_ant_color() const override {
-            return sf::Color::Red;
+            return {139, 69, 19};
         }
     };
 

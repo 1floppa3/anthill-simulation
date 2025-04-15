@@ -12,7 +12,7 @@ namespace Model::Roles {
             return "Caretaker";
         }
         [[nodiscard]] sf::Color get_ant_color() const override {
-            return sf::Color::White;
+            return {102, 205, 170};
         }
     };
 

@@ -14,7 +14,7 @@ namespace Model::Roles {
             return "No role";
         }
         [[nodiscard]] sf::Color get_ant_color() const override {
-            return sf::Color::White;
+            return {128, 128, 128};
         }
     };
 

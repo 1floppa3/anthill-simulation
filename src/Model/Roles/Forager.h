@@ -15,7 +15,7 @@ namespace Model::Roles {
             return "Forager";
         }
         [[nodiscard]] sf::Color get_ant_color() const override {
-            return sf::Color::Blue;
+            return {255, 215, 0};
         }
     };
 

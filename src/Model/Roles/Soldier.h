@@ -12,7 +12,7 @@ namespace Model::Roles {
             return "Soldier";
         }
         [[nodiscard]] sf::Color get_ant_color() const override {
-            return sf::Color::White;
+            return {178, 34, 34};
         }
     };
 

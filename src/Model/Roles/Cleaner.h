@@ -12,7 +12,7 @@ namespace Model::Roles {
             return "Cleaner";
         }
         [[nodiscard]] sf::Color get_ant_color() const override {
-            return sf::Color::White;
+            return {135, 206, 235};
         }
     };
 
