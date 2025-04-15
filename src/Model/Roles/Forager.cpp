@@ -4,12 +4,12 @@
 
 namespace Model::Roles {
 
-    void Forager::work(View::AntDrawable &drawable_ant, View::FoodMap &food_map) {
+    void Forager::work(View::AntDrawable &drawable_ant, Model::HiveMind& hive_mind) {
         const sf::Vector2f anthill_pos = Core::g_anthill.drawable->get_position();
 
         if (!is_bringing) {
             if (!food_point) {
-                View::FoodPoint* new_food_point = food_map.find_closest_food(drawable_ant);
+                View::FoodPoint* new_food_point = hive_mind.find_closest_food(drawable_ant);
                 if (new_food_point != nullptr) {
                     food_point = new_food_point;
                     drawable_ant.go_to(food_point->getPosition());
@@ -24,7 +24,7 @@ namespace Model::Roles {
         else {
             food_point->setPosition(drawable_ant.get_position());
             if (drawable_ant.has_reached(anthill_pos)) {
-                food_map.store_food(food_point);
+                hive_mind.store_food(food_point);
                 food_point = nullptr;
                 is_bringing = false;
             }

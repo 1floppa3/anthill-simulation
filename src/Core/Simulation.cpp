@@ -13,7 +13,7 @@
 namespace Core {
 
     Simulation::Simulation(const sf::Vector2u &res): resolution(res) {
-        g_event_manager.set_food_map(g_anthill.food_map);
+        g_event_manager.set_hive_mind(&g_anthill.hive_mind);
         window = sf::RenderWindow(sf::VideoMode(resolution), title, sf::Style::Default, sf::State::Fullscreen);
         window.setVerticalSyncEnabled(true); // ограничит фпс до герцовки
         window.setIcon(sf::Image("../assets/ico.png"));
@@ -40,13 +40,18 @@ namespace Core {
                         window.close();
                     } else if (keycode == sf::Keyboard::Scancode::Up) {
                         g_event_manager.generate_food(sf::Vector2f(resolution));
+                    }else if (keycode == sf::Keyboard::Scancode::Num1) {
+                        g_event_manager.generate_food(sf::Vector2f(resolution));
+                    }else if (keycode == sf::Keyboard::Scancode::Num2) {
+                        g_event_manager.generate_wood(sf::Vector2f(resolution));
                     }
                 }
             }
 
             // Business logic
-            if (!g_anthill.drawable->is_animating())
+            if (!g_anthill.drawable->is_animating()){
                 g_anthill.simulate_day(resolution);
+            }
 
             // Update by dt
             sf::Time dt = clock.restart();
@@ -55,7 +60,7 @@ namespace Core {
             for (const Model::Ant &ant: g_anthill.ants) {
                 if (ant.is_alive()) {
                     ant.detect_objects(g_event_manager);
-                    ant.do_work(*g_anthill.food_map);
+                    ant.do_work(g_anthill.hive_mind);
                     ant.drawable->update_text(ant);
                     ant.drawable->update(dt);
                 }
@@ -66,8 +71,12 @@ namespace Core {
             window.draw(bg);
             window.draw(*g_anthill.drawable);
             for (const Model::Ant &ant: g_anthill.ants) window.draw(*ant.drawable);
-            window.draw(*g_anthill.food_map);
+            window.draw(*g_anthill.hive_mind.get_food_map());
+            window.draw(*g_anthill.hive_mind.get_wood_map());
             for (auto it = g_event_manager.undetected_food.begin(); it !=  g_event_manager.undetected_food.end(); ++it) {
+                window.draw(**it);
+            }
+            for (auto it = g_event_manager.undetected_wood.begin(); it !=  g_event_manager.undetected_wood.end(); ++it) {
                 window.draw(**it);
             }
             window.draw(hud);

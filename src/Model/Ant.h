@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Roles/Role.h"
-#include "../View/FoodMap.h"
+#include "HiveMind.h"
 
 namespace Model {
 
@@ -23,7 +23,7 @@ namespace Model {
 
         ~Ant();
 
-        void do_work(View::FoodMap& food_map) const;
+        void do_work(Model::HiveMind& hive_mind) const;
         void detect_objects(Core::EventManager& event_manager) const;
         void update_role();
 

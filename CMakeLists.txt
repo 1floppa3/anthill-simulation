@@ -36,8 +36,8 @@ add_executable(
     src/View/UI/FPSText.h
         src/View/FoodPoint.cpp
         src/View/FoodPoint.h
-        src/View/FoodMap.cpp
-        src/View/FoodMap.h
+        src/Model/Maps/FoodMap.cpp
+        src/Model/Maps/FoodMap.h
         src/View/Background.cpp
         src/View/Background.h
         src/View/UI/AntInfoText.cpp
@@ -47,6 +47,14 @@ add_executable(
         src/Core/EventManager.cpp
         src/Core/EventManager.h
         src/Model/Roles/Role.cpp
+        src/Model/HiveMind.cpp
+        src/Model/HiveMind.h
+        src/Model/Store.cpp
+        src/Model/Store.h
+        src/View/WoodPoint.cpp
+        src/View/WoodPoint.h
+        src/Model/Maps/WoodMap.h
+        src/Model/Maps/WoodMap.cpp
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)

@@ -1,21 +1,23 @@
 #include "Ant.h"
 
 #include "../Core/Simulation.h"
+#include "../Utils/Random.h"
 #include "Roles/Cleaner.h"
 #include "Roles/Forager.h"
+#include "Roles/Builder.h"
 #include "Roles/NoRole.h"
 
 namespace Model {
     int Ant::counter = 0;
 
-    Ant::Ant(const int age, const int health, const sf::Vector2u &area):
-    id(++counter), age(age), health(health), role(new Roles::NoRole), drawable(new View::AntDrawable(area)) {
+    Ant::Ant(const int age, const int health, const sf::Vector2u &area) :
+            id(++counter), age(age), health(health), role(new Roles::NoRole), drawable(new View::AntDrawable(area)) {
         Core::g_logger.add_message("New ant #" + std::to_string(id) + " is born.");
     }
 
-    Ant::Ant(const Ant &other):
-    id(other.id), age(other.age), health(other.health), role(other.role ? other.role->clone() : nullptr),
-    drawable(other.drawable ? other.drawable->clone() : nullptr) {}
+    Ant::Ant(const Ant &other) :
+            id(other.id), age(other.age), health(other.health), role(other.role ? other.role->clone() : nullptr),
+            drawable(other.drawable ? other.drawable->clone() : nullptr) {}
 
     Ant &Ant::operator=(const Ant &other) {
         if (this != &other) {
@@ -36,11 +38,11 @@ namespace Model {
         delete drawable;
     }
 
-    void Ant::do_work(View::FoodMap &food_map) const {
-        role->work(*drawable, food_map);
+    void Ant::do_work(Model::HiveMind &hive_mind) const {
+        role->work(*drawable, hive_mind);
     }
 
-    void Ant::detect_objects(Core::EventManager& event_manager) const {
+    void Ant::detect_objects(Core::EventManager &event_manager) const {
         role->detect_objects(*drawable, event_manager);
     }
 
@@ -55,8 +57,12 @@ namespace Model {
 
     // TODO: change
     Roles::Role *Ant::get_new_role() const {
-        if(age > 5 && dynamic_cast<Roles::Forager *>(role) == nullptr)
-            return new Roles::Forager;
+        if (age > 5 && dynamic_cast<Roles::Forager *>(role) == nullptr && dynamic_cast<Roles::Builder *>(role) == nullptr) {
+            if (Utils::Random::random(2) % 2 == 0)
+                return new Roles::Forager;
+            else
+                return new Roles::Builder;
+        }
         return nullptr;
         //    if (age > 40 && dynamic_cast<Cleaner *>(role) == nullptr)
         //        return new Cleaner;

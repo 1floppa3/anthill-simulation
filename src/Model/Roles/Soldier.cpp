@@ -2,7 +2,7 @@
 
 namespace Model::Roles {
 
-    void Soldier::work(View::AntDrawable& drawable_ant, View::FoodMap& food_map)  {}
+    void Soldier::work(View::AntDrawable& drawable_ant, Model::HiveMind& hive_mind)  {}
 
     Soldier* Soldier::clone() const {
         return new Soldier(*this);

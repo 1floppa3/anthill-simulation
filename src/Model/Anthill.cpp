@@ -4,7 +4,8 @@
 
 namespace Model {
 
-    Anthill::Anthill(const int rank) : rank(rank), day_counter(0), drawable(new View::AnthillDrawable()), food_map(new View::FoodMap()) {
+    Anthill::Anthill(const int rank) : rank(rank), day_counter(0), drawable(new View::AnthillDrawable()), food_store(10),
+                                       wood_store(10) {
     }
 
     void Anthill::simulate_day(const sf::Vector2u& resolution) {
@@ -40,12 +41,11 @@ namespace Model {
     }
 
     void Anthill::update_size() {
-        if (resources[ResourceType::WOOD] >= anthill_ranks[rank].wood_to_update && rank < max_rank) {
-            resources[ResourceType::WOOD] -= anthill_ranks[rank].wood_to_update;
+        if (wood_store.get_supplies() >= anthill_ranks[rank].wood_to_update && rank < max_rank) {
+           wood_store.decrease(anthill_ranks[rank].wood_to_update);
             ++rank;
         }
-        if (resources[ResourceType::WOOD] < 0 && rank > 0) {
-            resources[ResourceType::WOOD] = 0;
+        if (wood_store.is_empty() && rank > 0) {
             --rank;
         }
     }
@@ -54,6 +54,14 @@ namespace Model {
     }
     void Anthill::aliment_ants(){
 
+    }
+
+    int Anthill::get_food_count() {
+        return food_store.get_supplies();
+    }
+
+    int Anthill::get_wood_count() {
+        return wood_store.get_supplies();
     }
 
 }

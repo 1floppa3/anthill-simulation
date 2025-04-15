@@ -7,10 +7,10 @@ namespace Model::Roles {
 
     class NoRole final : public Role {
     public:
-        void work(View::AntDrawable& drawable_ant, View::FoodMap& food_map) override {
+        void work(View::AntDrawable &drawable_ant, Model::HiveMind &hive_mind) override {
         }
 
-        [[nodiscard]] NoRole* clone() const override;
+        [[nodiscard]] NoRole *clone() const override;
 
         [[nodiscard]] std::string get_name() const override {
             return "No role";

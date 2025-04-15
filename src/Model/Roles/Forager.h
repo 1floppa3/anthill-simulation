@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Role.h"
-#include "../../View/AntDrawable.h"
 
 namespace Model::Roles {
 
@@ -10,7 +9,7 @@ namespace Model::Roles {
         bool is_bringing;
     public:
         Forager();
-        void work(View::AntDrawable& drawable_ant, View::FoodMap& food_map) override;
+        void work(View::AntDrawable& drawable_ant, Model::HiveMind& hive_mind) override;
         [[nodiscard]] Forager* clone() const override;
         [[nodiscard]] std::string get_name() const override {
             return "Forager";

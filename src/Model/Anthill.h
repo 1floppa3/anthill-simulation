@@ -4,14 +4,10 @@
 #include <map>
 #include "Ant.h"
 #include "../View/AnthillDrawable.h"
-#include "../View/FoodMap.h"
+#include "Maps/FoodMap.h"
+#include "HiveMind.h"
 
 namespace Model {
-
-    enum class ResourceType {
-        FOOD,
-        WOOD
-    };
 
     class Anthill {
         struct Rank {
@@ -25,9 +21,9 @@ namespace Model {
                                                            {20, 30, 6},
                                                            {25, 40, 8}};
         int rank;
-        std::map<ResourceType, int> resources;
+        Store food_store, wood_store;
     public:
-        View::FoodMap* food_map;
+        Model::HiveMind hive_mind = Model::HiveMind(food_store, wood_store);
         int day_counter;
         View::AnthillDrawable* drawable;
         std::list<Ant> ants;
@@ -35,7 +31,8 @@ namespace Model {
         explicit Anthill(int rank = 1);
 
         void simulate_day(const sf::Vector2u& resolution);
-
+        int get_food_count();
+        int get_wood_count();
         void aliment_ants();
         void maintain_anthill();
         void update_size();
