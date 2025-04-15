@@ -1,14 +1,13 @@
 #ifndef ANTHILL_SIMULATION_POINT_H
 #define ANTHILL_SIMULATION_POINT_H
 
-#include <SFML/Graphics/CircleShape.hpp>
+#include "SFML/Graphics/Sprite.hpp"
 
 namespace View {
 
-    class Point: public sf::CircleShape {
-        static constexpr float radius = 5.f;
+    class Point: public sf::Sprite {
     public:
-        explicit Point(const sf::Vector2f &pos);
+        explicit Point(const sf::Vector2f &pos, const sf::Texture &texture, float sprite_scale = 1.0);
     };
 }
 
