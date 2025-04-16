@@ -7,6 +7,7 @@
 namespace View {
 
     class AntDrawable final : public sf::Drawable {
+        const std::string texture_path = "../assets/textures/ant.png";
         const float base_speed = 2.f;
         const float sprite_scale = 2.f;
         const float acceleration = 200.f;
@@ -35,7 +36,9 @@ namespace View {
         AntDrawable* clone() const;
 
         sf::Vector2f get_position() const;
+        sf::FloatRect get_global_bounds() const;
         void go_to(const sf::Vector2f& dest);
+        void reset_speed();
         bool has_reached(const sf::Vector2f &target) const;
         void set_color(const sf::Color &color);
 

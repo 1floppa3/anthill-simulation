@@ -9,7 +9,7 @@
 namespace View {
 
     AntDrawable::AntDrawable(const sf::Vector2u& area_):
-    texture(Utils::TextureManager::instance().get("../assets/textures/ant.png")), sprite(texture), area(area_) {
+    texture(Utils::TextureManager::instance().get(texture_path)), sprite(texture), area(area_) {
         sprite.setScale({sprite_scale, sprite_scale});
 
         const sf::Vector2u tex_size = sprite.getTexture().getSize();
@@ -33,6 +33,9 @@ namespace View {
     sf::Vector2f AntDrawable::get_position() const {
         return sprite.getPosition();
     }
+    sf::FloatRect AntDrawable::get_global_bounds() const {
+        return sprite.getGlobalBounds();
+    }
     void AntDrawable::go_to(const sf::Vector2f& dest) {
         const sf::Vector2f pos = sprite.getPosition();
 
@@ -48,6 +51,10 @@ namespace View {
         // обновляем угол
         sprite.setRotation(dir.angle());
     }
+    void AntDrawable::reset_speed() {
+        velocity = velocity.normalized() * base_speed;
+    }
+
     bool AntDrawable::has_reached(const sf::Vector2f &target) const {
         const float distance_squared = (get_position() - target).lengthSquared();
         return distance_squared <= reach_threshold * reach_threshold;

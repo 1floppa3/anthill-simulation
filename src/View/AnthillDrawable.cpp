@@ -63,7 +63,7 @@ namespace View {
     AnthillDrawable::AnthillDrawable():
     angles(contour_points), current_state(contour_points),
     vertices(sf::PrimitiveType::TriangleFan),
-    texture(Utils::TextureManager::instance().get("../assets/textures/anthill.png")) {
+    texture(Utils::TextureManager::instance().get(texture_path)) {
         texture.setRepeated(true);
 
         animation.start_state.resize(contour_points);
