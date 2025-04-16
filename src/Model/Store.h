@@ -4,18 +4,20 @@
 namespace Model {
     class Store {
     private:
-        int capacity;
-        int supplies;
+        size_t capacity;
+        size_t supplies;
     public:
-        explicit Store(int capacity);
+        explicit Store(int capacity, int supplies);
         Store() = delete;
-        void increase(int val);
+        void increase(size_t val);
 
-        void decrease(int val);
+        void decrease(size_t val);
 
-        void update_capacity(int val);
+        void update_capacity(size_t new_capacity);
 
-        int get_supplies() const;
+        size_t get_supplies() const;
+
+        size_t get_capacity() const;
 
         bool is_empty() const;
     };

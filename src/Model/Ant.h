@@ -12,12 +12,13 @@ namespace Model {
         static int counter;
 
     public:
-        int id, age, health;
+        int id, age;
+        float hp;
         Roles::Role *role;
         View::AntDrawable *drawable;
 
         Ant() = default;
-        Ant(int age, int health, const sf::Vector2u &area);
+        Ant(int age, float health, const sf::Vector2u &area);
         Ant(const Ant& other);
         Ant& operator=(const Ant& other);
         ~Ant();

@@ -4,11 +4,12 @@
 #include "../Utils/TextureManager.h"
 #include "../View/UI/Logger.h"
 #include "EventManager.h"
+#include "../Model/AnthillSettings.h"
 
 namespace Core {
 
     inline View::UI::Logger g_logger;
-    inline Model::Anthill g_anthill;
+    inline Model::Anthill g_anthill(AnthillSettings::Init(10, 10));
     inline Core::EventManager g_event_manager;
 
     inline auto g_general_font = sf::Font("../assets/fonts/Jura-VariableFont_wght.ttf");

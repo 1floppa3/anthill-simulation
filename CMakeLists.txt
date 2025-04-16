@@ -49,11 +49,10 @@ add_executable(
     src/Model/Enemy.cpp
     src/Model/EnemyController.cpp
     src/Model/Game.cpp
+    src/Model/AnthillSettings.cpp
     src/Utils/Color.h
-        src/View/Render/GlowedSprite.cpp
-        src/View/Render/GlowedSprite.h
-        src/View/Render/RoundedRect.cpp
-        src/View/Render/RoundedRect.h
+    src/View/Render/GlowedSprite.cpp
+    src/View/Render/RoundedRect.cpp
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)

@@ -20,6 +20,7 @@ namespace Core {
     }
 
     void Simulation::start_simulation() {
+        g_anthill.spawn_initial_ants(resolution);
         View::UI::HUD hud(resolution);
         const View::Background bg(resolution);
 
@@ -30,6 +31,8 @@ namespace Core {
             {static_cast<float>(resolution.x) / 4.f, static_cast<float>(resolution.y) / 2.f});
 
         sf::Clock clock;
+        sf::Time dt;
+        float day_clock = 0;
         while (window.isOpen()) {
             while (const std::optional event = window.pollEvent()) {
                 if (event->is<sf::Event::Closed>()) {
@@ -45,14 +48,15 @@ namespace Core {
                     }
                 }
             }
-
+            dt = clock.restart();
+            day_clock += dt.asSeconds();
             // Business logic
-            if (!g_anthill.drawable->is_animating()){
+            if (day_clock > 10){
                 g_anthill.simulate_day(resolution);
+                day_clock = 0;
             }
 
             // Update by dt
-            sf::Time dt = clock.restart();
             hud.update(dt);
             g_anthill.drawable->update(dt);
             for (const Model::Ant &ant: g_anthill.ants) {

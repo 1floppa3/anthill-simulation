@@ -11,20 +11,20 @@
 namespace Model {
     int Ant::counter = 0;
 
-    Ant::Ant(const int age, const int health, const sf::Vector2u &area) :
-            id(++counter), age(age), health(health), role(new Roles::NoRole), drawable(new View::AntDrawable(area)) {
+    Ant::Ant(int age, float hp, const sf::Vector2u &area) :
+            id(++counter), age(age), hp(hp), role(new Roles::NoRole), drawable(new View::AntDrawable(area)) {
         Core::g_logger.add_message("New ant #" + std::to_string(id) + " is born.");
     }
 
     Ant::Ant(const Ant &other) :
-            id(other.id), age(other.age), health(other.health), role(other.role ? other.role->clone() : nullptr),
+            id(other.id), age(other.age), hp(other.hp), role(other.role ? other.role->clone() : nullptr),
             drawable(other.drawable ? other.drawable->clone() : nullptr) {}
 
     Ant &Ant::operator=(const Ant &other) {
         if (this != &other) {
             id = other.id;
             age = other.age;
-            health = other.health;
+            hp = other.hp;
             delete role;
             delete drawable;
             role = other.role ? other.role->clone() : nullptr;
@@ -45,10 +45,10 @@ namespace Model {
 
     void Ant::deal_damage(int damage)
     {
-        if (damage >= health)
-            health = 0;
+        if (damage >= hp)
+            hp = 0;
         else
-            health -= damage;
+            hp -= damage;
     }
 
     void Ant::detect_objects(Core::EventManager &event_manager) const {
@@ -89,7 +89,7 @@ namespace Model {
     }
 
     bool Ant::is_alive() const {
-        return health > 0;
+        return hp > 0;
     }
 
 }
