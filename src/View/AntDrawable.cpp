@@ -9,11 +9,14 @@
 namespace View {
 
     AntDrawable::AntDrawable(const sf::Vector2u& area_):
-    texture(Utils::TextureManager::instance().get("../assets/textures/ant.png")), sprite(texture) {
-        area = area_;
+    texture(Utils::TextureManager::instance().get("../assets/textures/ant.png")), sprite(texture), area(area_) {
         sprite.setScale({sprite_scale, sprite_scale});
+
         const sf::Vector2u tex_size = sprite.getTexture().getSize();
-        sprite.setOrigin({static_cast<float>(tex_size.x) / 2.f, static_cast<float>(tex_size.y) / 2.f});
+        animation.frame_size.x = static_cast<int>(tex_size.x);
+        animation.frame_size.y = static_cast<int>(tex_size.y) / animation.frame_count;
+        sprite.setTextureRect(sf::IntRect({0, 0}, {animation.frame_size.x, animation.frame_size.y}));
+        sprite.setOrigin({static_cast<float>(animation.frame_size.x) / 2.f, static_cast<float>(animation.frame_size.y) / 2.f});
 
         // random pos
         float x = Utils::Random::random(static_cast<float>(area.x));
@@ -48,6 +51,9 @@ namespace View {
     bool AntDrawable::has_reached(const sf::Vector2f &target) const {
         const float distance_squared = (get_position() - target).lengthSquared();
         return distance_squared <= reach_threshold * reach_threshold;
+    }
+    void AntDrawable::set_color(const sf::Color &color) {
+        sprite.setColor(color);
     }
 
     void AntDrawable::update(const sf::Time& dt) {
@@ -94,8 +100,21 @@ namespace View {
         }
 
         sprite.setPosition(pos);
-        sprite.setRotation(velocity.angle());
+        // зеркало по горизонтали, если муравей идет влево
+        sprite.setRotation(velocity.x < 0 ? velocity.angle() + sf::degrees(180) : velocity.angle());
+        sprite.setScale({velocity.x < 0 ? -sprite_scale : sprite_scale, sprite_scale});
 
+        // анимация
+        animation.elapsed_time += dt.asSeconds();
+        if (animation.elapsed_time >= animation.frame_time) {
+            animation.elapsed_time = 0.f;
+            animation.current_frame = (animation.current_frame + 1) % animation.frame_count;
+            sprite.setTextureRect(sf::IntRect(
+                {0, animation.current_frame * animation.frame_size.y},
+                {animation.frame_size.x, animation.frame_size.y}));
+        }
+
+        // выравенивание текста
         const sf::FloatRect sprite_bounds = sprite.getGlobalBounds();
         float desiredY = sprite.getPosition().y - sprite_bounds.size.y / 2.f - info_text.getLocalBounds().size.y - 2.f;
         if (desiredY < 0.f)
@@ -115,7 +134,6 @@ namespace View {
 
     void AntDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(info_text, states);
-        states.texture = &texture;
         target.draw(sprite, states);
     }
 

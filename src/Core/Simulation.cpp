@@ -23,7 +23,7 @@ namespace Core {
         View::UI::HUD hud(resolution);
         const View::Background bg(resolution, "../assets/textures/base.png");
 
-        g_logger.add_message("[system] Start simulation");
+        g_logger.add_message("<color=#4778b3>[system]</color> Start simulation.");
 
         // spawn anthill half the height and quarter the width
         g_anthill.drawable->set_position(
@@ -71,11 +71,11 @@ namespace Core {
             for (const Model::Ant &ant: g_anthill.ants) window.draw(*ant.drawable);
             window.draw(*g_anthill.hive_mind.get_food_map());
             window.draw(*g_anthill.hive_mind.get_wood_map());
-            for (auto it = g_event_manager.undetected_food.begin(); it !=  g_event_manager.undetected_food.end(); ++it) {
-                window.draw(**it);
+            for (const auto &point: g_event_manager.undetected_food) {
+                window.draw(*point);
             }
-            for (auto it = g_event_manager.undetected_wood.begin(); it !=  g_event_manager.undetected_wood.end(); ++it) {
-                window.draw(**it);
+            for (const auto &point: g_event_manager.undetected_wood) {
+                window.draw(*point);
             }
             window.draw(hud);
             window.display();
