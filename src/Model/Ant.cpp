@@ -39,8 +39,16 @@ namespace Model {
         delete drawable;
     }
 
-    void Ant::do_work(Model::HiveMind &hive_mind) const {
+    void Ant::do_work(Model::HiveMind & hive_mind) const {
         role->work(*drawable, hive_mind);
+    }
+
+    void Ant::deal_damage(int damage)
+    {
+        if (damage >= health)
+            health = 0;
+        else
+            health -= damage;
     }
 
     void Ant::detect_objects(Core::EventManager &event_manager) const {

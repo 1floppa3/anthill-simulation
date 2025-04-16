@@ -4,10 +4,10 @@
 
 #include "Roles/Role.h"
 #include "HiveMind.h"
+#include "IAttackable.h"
 
 namespace Model {
-
-    class Ant {
+    class Ant : public IAttackable {
         [[nodiscard]] Roles::Role *get_new_role() const;
         static int counter;
 
@@ -20,8 +20,10 @@ namespace Model {
         Ant(int age, int health, const sf::Vector2u &area);
         Ant(const Ant& other);
         Ant& operator=(const Ant& other);
-
         ~Ant();
+
+        sf::Vector2f get_position() const override { return drawable->get_position(); }
+        void deal_damage(int damage) override;
 
         void do_work(Model::HiveMind& hive_mind) const;
         void detect_objects(Core::EventManager& event_manager) const;
