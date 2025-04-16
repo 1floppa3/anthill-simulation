@@ -43,4 +43,9 @@ namespace Model{
         }
     }
 
+    Map::~Map() {
+        for (auto &obj: points) {
+            delete obj.first;
+        }
+    }
 }

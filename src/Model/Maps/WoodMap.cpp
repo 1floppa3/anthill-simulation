@@ -15,10 +15,6 @@ namespace Model {
     }
 
     View::WoodPoint* WoodMap::find_closest_wood(const View::AntDrawable &drawable) {
-        return dynamic_cast<View::WoodPoint *>(find_closest_object(drawable));
-    }
-
-    void WoodMap::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-        Map::draw(target, states);
+        return dynamic_cast<View::WoodPoint*>(find_closest_object(drawable));
     }
 }

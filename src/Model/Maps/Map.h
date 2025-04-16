@@ -14,12 +14,13 @@ namespace Model{
         Model::Store& store;
     public:
         Map(Model::Store& store);
-        void add_object(View::Point* point);
-        void store_object(View::Point* point);
+        virtual void add_object(View::Point* point);
+        virtual void store_object(View::Point* point);
 
-        View::Point* find_closest_object(const View::AntDrawable& drawable);
+        virtual View::Point* find_closest_object(const View::AntDrawable& drawable);
 
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+        ~Map() override;
     };
 }
 

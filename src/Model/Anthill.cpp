@@ -23,8 +23,8 @@ namespace Model {
         drawable->expand(anthill_max_area);
 
         // Добавляем нового муравья
-        if (ants.size() < 10)
-            ants.emplace_back(0, Utils::Random::random(10, 40), resolution);
+        if (ants.size() < 2)
+            ants.emplace_back(0, resolution);
 
         // Remove killed ants
         for (auto it = ants.begin(); it != ants.end();) {

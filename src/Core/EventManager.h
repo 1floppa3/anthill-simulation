@@ -4,6 +4,7 @@
 #include "../View/Points/FoodPoint.h"
 #include "../View/Points/WoodPoint.h"
 #include "../View/AntDrawable.h"
+#include "../Model/Enemy.h"
 #include <list>
 
 
@@ -15,6 +16,7 @@ namespace Core{
         Model::HiveMind* hive_mind;
         std::list<View::FoodPoint*> undetected_food;
         std::list<View::WoodPoint*> undetected_wood;
+        std::list<Model::Enemy*> undetected_enemies;
 
         void set_hive_mind(Model::HiveMind* hive_mind);
 
@@ -22,6 +24,7 @@ namespace Core{
 
         void generate_wood(const sf::Vector2f &area);
 
+        void generate_enemy(const sf::Vector2u &area);
 
         void detect_objects(View::AntDrawable& ant_drawable);
 //        Enemy enemies;

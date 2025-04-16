@@ -15,8 +15,6 @@ namespace Model {
         void store_wood(View::WoodPoint* wood_point);
 
         View::WoodPoint* find_closest_wood(const View::AntDrawable& drawable);
-
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     };
 
 }

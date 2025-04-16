@@ -1,15 +1,19 @@
 #ifndef ANTHILL_SIMULATION_HIVEMIND_H
 #define ANTHILL_SIMULATION_HIVEMIND_H
 
+#include <list>
 #include "Maps/FoodMap.h"
 #include "../View/Points/WoodPoint.h"
 #include "Maps/WoodMap.h"
+#include "Maps/EnemyMap.h"
+#include "Enemy.h"
 
 namespace Model{
     class HiveMind {
     private:
         Model::FoodMap* food_map;
         Model::WoodMap* wood_map;
+        Model::EnemyMap* enemies;
     public:
         explicit HiveMind(Model::Store& food_store, Model::Store& wood_store);
 
@@ -23,6 +27,9 @@ namespace Model{
         void add_wood(View::WoodPoint* wood_point);
         View::WoodPoint* find_closest_wood(const View::AntDrawable& drawable);
 
+        Model::EnemyMap* get_enemy_map();
+        void add_enemy(Model::Enemy* enemy);
+        Model::Enemy* get_enemy();
     };
 }
 

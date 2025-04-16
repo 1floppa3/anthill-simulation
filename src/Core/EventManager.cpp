@@ -22,6 +22,11 @@ namespace Core {
         undetected_wood.push_back(new_wood);
     }
 
+    void EventManager::generate_enemy(const sf::Vector2u &area) {
+        auto *new_enemy = new Model::Enemy(area);
+        undetected_enemies.push_back(new_enemy);
+    }
+
     void EventManager::detect_objects(View::AntDrawable &ant_drawable) {
         auto [x, y] = ant_drawable.get_position();
         float x_left_up = x - ant_drawable.object_detection_area, y_left_up = y - ant_drawable.object_detection_area;
@@ -44,6 +49,16 @@ namespace Core {
                 y_left_up <= f_y && f_y <= y_right_down) {
                 hive_mind->add_food(*it);
                 it = undetected_food.erase(it);
+            } else
+                ++it;
+        }
+
+        for (auto it = undetected_enemies.begin(); it != undetected_enemies.end();) {
+            auto [f_x, f_y] = (*it)->drawable->get_position();
+            if (x_left_up <= f_x && f_x <= x_right_down &&
+                y_left_up <= f_y && f_y <= y_right_down) {
+                hive_mind->add_enemy(*it);
+                it = undetected_enemies.erase(it);
             } else
                 ++it;
         }

@@ -15,8 +15,6 @@ namespace Model {
         void store_food(View::FoodPoint* food_point);
 
         View::FoodPoint* find_closest_food(const View::AntDrawable& drawable);
-
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     };
 
 }

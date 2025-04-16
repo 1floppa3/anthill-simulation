@@ -6,17 +6,18 @@
 #include "Roles/Forager.h"
 #include "Roles/Builder.h"
 #include "Roles/NoRole.h"
+#include "Roles/Soldier.h"
 
 namespace Model {
     int Ant::counter = 0;
 
-    Ant::Ant(const int age, const int health, const sf::Vector2u &area) :
-            id(++counter), age(age), health(health), role(new Roles::NoRole), drawable(new View::AntDrawable(area)) {
+    Ant::Ant(const int age, const sf::Vector2u &area) : Entity(),
+            id(++counter), age(age), role(new Roles::NoRole), drawable(new View::AntDrawable(area)) {
         Core::g_logger.add_message("New ant #" + std::to_string(id) + " is born.");
     }
 
-    Ant::Ant(const Ant &other) :
-            id(other.id), age(other.age), health(other.health), role(other.role ? other.role->clone() : nullptr),
+    Ant::Ant(const Ant &other) : Entity(other),
+            id(other.id), age(other.age), role(other.role ? other.role->clone() : nullptr),
             drawable(other.drawable ? other.drawable->clone() : nullptr) {}
 
     Ant &Ant::operator=(const Ant &other) {
@@ -57,6 +58,9 @@ namespace Model {
 
     // TODO: change
     Roles::Role *Ant::get_new_role() const {
+        if(dynamic_cast<Roles::Soldier *>(role) == nullptr)
+            return new Roles::Soldier;
+        return nullptr;
         if (age > 5 && dynamic_cast<Roles::Forager *>(role) == nullptr && dynamic_cast<Roles::Builder *>(role) == nullptr) {
             if (Utils::Random::random(2) % 2 == 0)
                 return new Roles::Forager;
@@ -76,9 +80,4 @@ namespace Model {
         //        return new NoRole;
         //    return nullptr;
     }
-
-    bool Ant::is_alive() const {
-        return health > 0;
-    }
-
 }

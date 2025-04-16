@@ -15,9 +15,4 @@ namespace Model {
     View::FoodPoint *FoodMap::find_closest_food(const View::AntDrawable &drawable) {
         return dynamic_cast<View::FoodPoint *>(find_closest_object(drawable));
     }
-
-    void FoodMap::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-        Map::draw(target, states);
-    };
-
 }

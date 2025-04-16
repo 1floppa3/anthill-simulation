@@ -4,20 +4,21 @@
 
 #include "Roles/Role.h"
 #include "HiveMind.h"
+#include "Entity.h"
 
 namespace Model {
 
-    class Ant {
+    class Ant: public Entity {
         [[nodiscard]] Roles::Role *get_new_role() const;
         static int counter;
 
     public:
-        int id, age, health;
+        int id, age;
         Roles::Role *role;
         View::AntDrawable *drawable;
 
         Ant() = default;
-        Ant(int age, int health, const sf::Vector2u &area);
+        Ant(int age, const sf::Vector2u &area);
         Ant(const Ant& other);
         Ant& operator=(const Ant& other);
 
@@ -26,8 +27,6 @@ namespace Model {
         void do_work(Model::HiveMind& hive_mind) const;
         void detect_objects(Core::EventManager& event_manager) const;
         void update_role();
-
-        [[nodiscard]] bool is_alive() const;
     };
 
 }

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../Model/Ant.h"
+#include "../Model/Enemy.h"
 #include "../Utils/Random.h"
 #include "../Utils/TextureManager.h"
 #include "../View/AnthillDrawable.h"
@@ -42,6 +43,8 @@ namespace Core {
                         g_event_manager.generate_food(sf::Vector2f(resolution));
                     } else if (keycode == sf::Keyboard::Scancode::Down || keycode == sf::Keyboard::Scancode::Num2) {
                         g_event_manager.generate_wood(sf::Vector2f(resolution));
+                    }else if (keycode == sf::Keyboard::Scancode::E || keycode == sf::Keyboard::Scancode::Num3) {
+                        g_event_manager.generate_enemy(resolution);
                     }
                 }
             }
@@ -63,6 +66,11 @@ namespace Core {
                     ant.drawable->update(dt);
                 }
             }
+            // enemies
+            for (auto it = g_event_manager.undetected_enemies.begin(); it !=  g_event_manager.undetected_enemies.end(); ++it) {
+                if(!(*it)->is_fighting)
+                    (*it)->drawable->update(dt);
+            }
 
             // Draw scene
             window.clear();
@@ -71,12 +79,20 @@ namespace Core {
             for (const Model::Ant &ant: g_anthill.ants) window.draw(*ant.drawable);
             window.draw(*g_anthill.hive_mind.get_food_map());
             window.draw(*g_anthill.hive_mind.get_wood_map());
+
+            g_anthill.hive_mind.get_enemy_map()->update_enemies(dt);
+            window.draw(*g_anthill.hive_mind.get_enemy_map());
             for (auto it = g_event_manager.undetected_food.begin(); it !=  g_event_manager.undetected_food.end(); ++it) {
                 window.draw(**it);
             }
             for (auto it = g_event_manager.undetected_wood.begin(); it !=  g_event_manager.undetected_wood.end(); ++it) {
                 window.draw(**it);
             }
+            // enemies
+            for (auto it = g_event_manager.undetected_enemies.begin(); it !=  g_event_manager.undetected_enemies.end(); ++it) {
+                window.draw(*(*it)->drawable);
+            }
+
             window.draw(hud);
             window.display();
         }

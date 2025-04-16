@@ -59,6 +59,12 @@ add_executable(
         src/View/Points/Point.h
         src/Model/Maps/Map.cpp
         src/Model/Maps/Map.h
+        src/Model/Entity.cpp
+        src/Model/Entity.h
+        src/Model/Enemy.cpp
+        src/Model/Enemy.h
+        src/Model/Maps/EnemyMap.cpp
+        src/Model/Maps/EnemyMap.h
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)
