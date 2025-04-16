@@ -4,9 +4,9 @@
 
 namespace View {
 
-    Background::Background(const sf::Vector2u& size_, const std::string& texture_name):
-    size(size_), sprite(Utils::TextureManager::instance().get(texture_name)) {
-        texture = Utils::TextureManager::instance().get(texture_name);
+    Background::Background(const sf::Vector2u& size_):
+    size(size_), sprite(Utils::TextureManager::instance().get(texture_path)) {
+        texture = Utils::TextureManager::instance().get(texture_path);
         texture.setRepeated(true);
         sprite.setTexture(texture);
         sprite.setTextureRect(

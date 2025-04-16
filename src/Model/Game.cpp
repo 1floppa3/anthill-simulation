@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <valarray>
+
 Model::Ant* Game::find_closest_ant(const sf::Vector2f& position, float field_of_vision) const
 {
 	if (anthill->ants.size() == 0)

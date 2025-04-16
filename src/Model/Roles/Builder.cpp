@@ -21,11 +21,15 @@ namespace Model::Roles {
             }
         }
         else {
-            wood_point->setPosition(drawable_ant.get_position());
+            const sf::FloatRect ant_bounds = drawable_ant.get_global_bounds();
+            const sf::Vector2f wood_pos(ant_bounds.position.x + ant_bounds.size.x / 2.f,
+                ant_bounds.position.y + ant_bounds.size.y + wood_point->get_global_bounds().size.y / 2.f - 40.f);
+            wood_point->setPosition(wood_pos);
             if (drawable_ant.has_reached(anthill_pos)) {
                 hive_mind.store_wood(wood_point);
                 wood_point = nullptr;
                 is_bringing = false;
+                drawable_ant.reset_speed();
             }
         }
     }

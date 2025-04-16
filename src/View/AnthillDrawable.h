@@ -5,6 +5,7 @@
 namespace View {
 
     class AnthillDrawable final : public sf::Drawable {
+        const std::string texture_path = "../assets/textures/anthill.png";
         const float window_margin = 25.f;
         static constexpr int contour_points = 20;
         const float init_point_dist = 60.f;

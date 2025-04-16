@@ -21,7 +21,7 @@ namespace Core {
 
     void Simulation::start_simulation() {
         View::UI::HUD hud(resolution);
-        const View::Background bg(resolution, "../assets/textures/base.png");
+        const View::Background bg(resolution);
 
         g_logger.add_message("<color=#4778b3>[system]</color> Start simulation.");
 

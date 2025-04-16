@@ -4,7 +4,7 @@
 #include <ranges>
 
 #include "../../Core/Simulation.h"
-
+#include "../Render/RoundedRect.h"
 
 namespace View::UI {
 
@@ -114,10 +114,6 @@ namespace View::UI {
     void Logger::draw(sf::RenderTarget& target, const sf::RenderStates states) const {
         const sf::Vector2f view_size = target.getView().getSize();
 
-        // TODO сделать округленные края
-        sf::RectangleShape background;
-        background.setFillColor(sf::Color(0, 0, 0, 150));
-
         float currentY = view_size.y - margin_bottom;
         const float startY = currentY;
 
@@ -135,8 +131,9 @@ namespace View::UI {
         if (currentY >= startY) return;
 
         const float background_height = startY - currentY + background_padding;
+        Render::RoundedRect background(sf::Vector2f(max_width + 10.f, background_height + 2 * background_padding), 10.f);
+        background.setFillColor(sf::Color(0, 0, 0, 150));
         background.setPosition({0.f, currentY - background_padding});
-        background.setSize(sf::Vector2f(max_width + 10.f, background_height + 2 * background_padding));
         target.draw(background, states);
 
         currentY = startY;

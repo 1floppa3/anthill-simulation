@@ -22,11 +22,15 @@ namespace Model::Roles {
             }
         }
         else {
-            food_point->setPosition(drawable_ant.get_position());
+            const sf::FloatRect ant_bounds = drawable_ant.get_global_bounds();
+            const sf::Vector2f food_pos(ant_bounds.position.x + ant_bounds.size.x / 2.f,
+                ant_bounds.position.y + ant_bounds.size.y + food_point->get_global_bounds().size.y / 2.f);
+            food_point->setPosition(food_pos);
             if (drawable_ant.has_reached(anthill_pos)) {
                 hive_mind.store_food(food_point);
                 food_point = nullptr;
                 is_bringing = false;
+                drawable_ant.reset_speed();
             }
         }
     }

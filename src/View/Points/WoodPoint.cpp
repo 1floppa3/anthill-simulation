@@ -5,7 +5,6 @@
 namespace View {
 
     WoodPoint::WoodPoint(const sf::Vector2f& pos):
-    Point(pos, Utils::TextureManager::instance().get("../assets/textures/log.png"), sprite_scale) {
-    }
+    Point(pos, Utils::TextureManager::instance().get(texture_path), sprite_scale, sprite_color) {}
 
 }
