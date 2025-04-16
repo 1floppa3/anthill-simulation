@@ -26,7 +26,7 @@ namespace View {
         AntDrawable* clone() const;
 
         sf::Vector2f get_position() const;
-        void go_to(const sf::Vector2f& dest);
+        void go_to(const sf::Vector2f& dest, bool reset_vel = true);
         bool has_reached(const sf::Vector2f &target) const;
 
         void update(const sf::Time& dt);

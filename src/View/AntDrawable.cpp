@@ -30,17 +30,19 @@ namespace View {
     sf::Vector2f AntDrawable::get_position() const {
         return sprite.getPosition();
     }
-    void AntDrawable::go_to(const sf::Vector2f& dest) {
+    void AntDrawable::go_to(const sf::Vector2f& dest, const bool reset_vel) {
         const sf::Vector2f pos = sprite.getPosition();
 
         // получаем + нормируем направляющий вектор
         sf::Vector2f dir = dest - pos;
         if (dir.length() == 0.f)
             return;
-        dir = dir.normalized();
 
+        velocity = dir;
         // сбрасываем скорость к базовой при повороте
-        velocity = dir * base_speed;
+        if (reset_vel)
+            velocity *= base_speed;
+        Core::g_logger.add_message("Ant speed: " + std::to_string(velocity.length()));
 
         // обновляем угол
         sprite.setRotation(dir.angle());
