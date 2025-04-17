@@ -25,9 +25,8 @@ namespace Model {
             food_store.update_capacity(ranks[current_rank].food_capacity);
             wood_store.update_capacity(ranks[current_rank].wood_capacity);
             hp = ranks[current_rank].max_hp;
-            // TODO: Animation of extention
-            // sf::Vector2u anthill_max_area(resolution.x / 3 * 2, resolution.y);
-            // drawable->expand(anthill_max_area);
+            sf::Vector2u anthill_max_area(resolution.x / 3 * 2, resolution.y);
+            drawable->expand(anthill_max_area);
         }
         else if (wood_store.get_supplies() >= ranks[current_rank].wood_to_maintain) {
             wood_store.decrease(ranks[current_rank].wood_to_maintain);
@@ -65,13 +64,11 @@ namespace Model {
                 ant.hp = max_ant_hp;
             else if (ant.hp < 0)
                 ant.hp = 0;
-            if (!ant.is_alive()) {
-                // TODO: Delete ant
-                continue;
-            }
             ++ant.age;
             ant.update_role();
         }
+
+        clear_dead_ants();
 
         if (ants.size() < ranks[current_rank].ants_capacity) {
             // TODO: Spawn ants
@@ -87,8 +84,13 @@ namespace Model {
         return wood_store.get_supplies();
     }
 
-    void Anthill::clear_dead_ants()
-    {
+    void Anthill::clear_dead_ants() {
+        for (auto it = ants.begin(); it != ants.end();) {
+            if (!it->is_alive())
+                it = ants.erase(it);
+            else
+                ++it;
+        }
     }
 
 }

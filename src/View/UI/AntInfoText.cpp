@@ -12,7 +12,7 @@ namespace View::UI {
         const std::string info = "ID: " + std::to_string(ant.id) +
             " | " + ant.role->get_name() +
             "\nAge: " + std::to_string(ant.age) +
-            " | HP: " + std::to_string(ant.hp);
+            " | HP: " + std::format("{:.2f}", ant.hp);
         this->setString(info);
     }
 

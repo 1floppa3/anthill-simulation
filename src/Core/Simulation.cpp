@@ -20,15 +20,15 @@ namespace Core {
     }
 
     void Simulation::start_simulation() {
-        g_anthill.spawn_initial_ants(resolution);
+        g_logger.add_message("<color=#4778b3>[system]</color> Start simulation.");
+
         View::UI::HUD hud(resolution);
         const View::Background bg(resolution);
-
-        g_logger.add_message("<color=#4778b3>[system]</color> Start simulation.");
 
         // spawn anthill half the height and quarter the width
         g_anthill.drawable->set_position(
             {static_cast<float>(resolution.x) / 4.f, static_cast<float>(resolution.y) / 2.f});
+        g_anthill.spawn_initial_ants(resolution);
 
         sf::Clock clock;
         sf::Time dt;
@@ -51,7 +51,7 @@ namespace Core {
             dt = clock.restart();
             day_clock += dt.asSeconds();
             // Business logic
-            if (day_clock > 10){
+            if (day_clock > 3) {
                 g_anthill.simulate_day(resolution);
                 day_clock = 0;
             }

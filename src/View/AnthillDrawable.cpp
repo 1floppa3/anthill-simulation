@@ -131,6 +131,7 @@ namespace View {
         float sum = 0.f;
         for (int i = 0; i < contour_points; ++i)
             sum += current_state[i];
+
         // приблизительная площадь (как у круга)
         const float avg_radius = sum / static_cast<float>(contour_points);
         area = std::numbers::pi_v<float> * avg_radius * avg_radius;
@@ -138,6 +139,7 @@ namespace View {
         if (factor >= 1.f) {
             current_state = animation.target_state;
             animation.processing = false;
+            Core::g_logger.add_message("<color=#4778b3>[system]</color> Anthill is expanded. New area: " + std::format("{:.2f}", area/10000.f));
         }
     }
 

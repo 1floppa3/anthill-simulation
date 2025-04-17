@@ -11,7 +11,7 @@ namespace View::UI {
     };
 
     class Logger final : public sf::Drawable {
-        const int max_history = 14;
+        const int max_history = 12;
         const float margin_bottom = 32.f;
         const float line_spacing = 3.f;
         const float max_width = 400.f;
@@ -19,8 +19,8 @@ namespace View::UI {
         static constexpr int font_size = 18;
         const sf::Color base_color = sf::Color(144, 238, 144);
 
-        const sf::Time display_duration = sf::seconds(7.5f);
-        const sf::Time fade_duration = sf::seconds(4.f);
+        const sf::Time display_duration = sf::seconds(12.f);
+        const sf::Time fade_duration = sf::seconds(6.f);
 
         struct LogMessage {
             std::string message;
