@@ -121,7 +121,7 @@ namespace View {
                 {animation.frame_size.x, animation.frame_size.y}));
         }
 
-        // выравенивание текста
+        // выравнивание текста
         const sf::FloatRect sprite_bounds = sprite.getGlobalBounds();
         float desiredY = sprite.getPosition().y - sprite_bounds.size.y / 2.f - info_text.getLocalBounds().size.y - 2.f;
         if (desiredY < 0.f)

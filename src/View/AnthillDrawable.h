@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Render/ParticleSystem.h"
+
 namespace View {
 
     class AnthillDrawable final : public sf::Drawable {
@@ -30,6 +32,7 @@ namespace View {
         sf::Texture& texture;
         sf::Transform transform;
         float area;
+        Render::ParticleSystem particles;
 
         void update_shape();
         [[nodiscard]] float get_point_max_dist(int point_idx, const sf::Vector2f &area) const;
@@ -43,6 +46,7 @@ namespace View {
         [[nodiscard]] bool is_animating() const;
 
         void expand(const sf::Vector2u& area);
+        void spawn_dust(const sf::Vector2f &pos);
 
         void update(const sf::Time& dt);
 

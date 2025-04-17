@@ -7,7 +7,7 @@
 #include "IAttackable.h"
 
 namespace Model {
-    class Ant : public IAttackable {
+    class Ant final : public IAttackable {
         [[nodiscard]] Roles::Role *get_new_role() const;
         static int counter;
 
@@ -17,13 +17,12 @@ namespace Model {
         Roles::Role *role;
         View::AntDrawable *drawable;
 
-        Ant() = default;
         Ant(int age, float health, const sf::Vector2u &area);
         Ant(const Ant& other);
         Ant& operator=(const Ant& other);
         ~Ant();
 
-        sf::Vector2f get_position() const override { return drawable->get_position(); }
+        [[nodiscard]] sf::Vector2f get_position() const override { return drawable->get_position(); }
         void deal_damage(int damage) override;
 
         void do_work(Model::HiveMind& hive_mind) const;
