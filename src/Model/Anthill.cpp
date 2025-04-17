@@ -10,16 +10,13 @@ namespace Model {
 
     void Anthill::spawn_initial_ants(const sf::Vector2u& resolution)
     {
-        ants.emplace_back(1, max_ant_hp, resolution);
-        ants.emplace_back(1, max_ant_hp, resolution);
-        ants.emplace_back(1, max_ant_hp, resolution);
-        ants.emplace_back(1, max_ant_hp, resolution);
-        ants.emplace_back(1, max_ant_hp, resolution);
+        for (int i = 0; i < 7; ++i)
+            ants.emplace_back(6, max_ant_hp, resolution);
     }
 
     void Anthill::simulate_day(const sf::Vector2u& resolution) {
         ++day_counter;
-        if (wood_store.get_supplies() >= ranks[current_rank].wood_to_update && current_rank < ranks.size() - 1) {
+        if (current_rank < ranks.size() - 1 && wood_store.get_supplies() >= ranks[current_rank + 1].wood_to_update) {
             ++current_rank;
             wood_store.decrease(ranks[current_rank].wood_to_update);
             food_store.update_capacity(ranks[current_rank].food_capacity);
@@ -35,7 +32,7 @@ namespace Model {
                 hp = ranks[current_rank].max_hp;
         }
         else {
-            hp -= 2 * ranks[current_rank].max_hp / 100;
+            hp -= 5 * ranks[current_rank].max_hp / 100;
             if (hp <= 0) {
                 std::cout << "Game over?\n";
             }
@@ -55,7 +52,7 @@ namespace Model {
             hp_impact = max_ant_hp * 0.05;
         }
         else {
-            hp_impact = -max_ant_hp / 2 * (food_per_ant * ants.size() - food_store.get_supplies()) / (food_per_ant * ants.size());
+            hp_impact = -max_ant_hp * 0.05 * (food_per_ant * ants.size() - food_store.get_supplies()) / (food_per_ant * ants.size());
         }
 
         for (auto& ant : ants) {
@@ -71,7 +68,6 @@ namespace Model {
         clear_dead_ants();
 
         if (ants.size() < ranks[current_rank].ants_capacity) {
-            // TODO: Spawn ants
             ants.emplace_back(0, max_ant_hp, resolution);
         }
     }

@@ -18,9 +18,9 @@ struct AnthillRank {
         } wrong_field;
     };
 
-    AnthillRank(int wood_to_update, int wood_to_maintain, int ants_capacity, int food_capacity, int wood_capacity) :
+    AnthillRank(int wood_to_update, int wood_to_maintain, int ants_capacity, int food_capacity, int wood_capacity, int max_hp) :
         wood_to_update(wood_to_update), wood_to_maintain(wood_to_maintain), ants_capacity(ants_capacity),
-        food_capacity(food_capacity), wood_capacity(wood_capacity) {
+        food_capacity(food_capacity), wood_capacity(wood_capacity), max_hp(max_hp) {
     }
 
     // Checks wether it's possible to upgrade the anthill to the next rank and wether the capacity of anthill reduces.
@@ -36,8 +36,7 @@ private:
     AnthillSettings(const std::vector<AnthillRank>& anthill_ranks, const std::vector<AnthillInfo::AntRole>& initial_roles,
         int initial_amount_of_wood, int initial_amount_of_food) :
         anthill_ranks(anthill_ranks), initial_roles(initial_roles), initial_amount_of_wood(initial_amount_of_wood),
-        initial_amount_of_food(initial_amount_of_food) {
-    }
+        initial_amount_of_food(initial_amount_of_food) {}
 public:
     //Attempts to create an instance of the class.
     static AnthillSettings Init(int initial_amount_of_wood = 0, int initial_amount_of_food = 0,

@@ -35,8 +35,8 @@ AnthillSettings AnthillSettings::Init(int initial_amount_of_wood, int initial_am
 	const std::vector<AnthillRank>& anthill_ranks, const std::vector<AnthillInfo::AntRole>& initial_roles) {
 	std::vector<AnthillRank> ranks;
 	if (anthill_ranks.size() == 0) {
-		ranks = { AnthillRank(0, 1, 5, 15, 15), AnthillRank(10, 2, 10, 20, 20),
-			AnthillRank(15, 4, 20, 30, 30),	AnthillRank(20, 6, 30, 40, 40), AnthillRank(25, 8, 40, 50, 50) };
+		ranks = { AnthillRank(0, 1, 10, 20, 20, 100), AnthillRank(10, 2, 15, 30, 30, 150),
+			AnthillRank(15, 3, 20, 40, 40, 175),	AnthillRank(20, 3, 30, 50, 50, 200), AnthillRank(25, 3, 40, 60, 60, 250) };
 	}
 	else {
 		AnthillRank::Error err;

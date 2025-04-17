@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../Model/Ant.h"
+#include "../Model/Game.h"
 #include "../Utils/Random.h"
 #include "../Utils/TextureManager.h"
 #include "../View/AnthillDrawable.h"
@@ -30,6 +31,7 @@ namespace Core {
             {static_cast<float>(resolution.x) / 4.f, static_cast<float>(resolution.y) / 2.f});
         g_anthill.spawn_initial_ants(resolution);
 
+        Game game(g_anthill);
         sf::Clock clock;
         sf::Time dt;
         float day_clock = 0;
@@ -51,7 +53,7 @@ namespace Core {
             dt = clock.restart();
             day_clock += dt.asSeconds();
             // Business logic
-            if (day_clock > 3) {
+            if (day_clock > 10) {
                 g_anthill.simulate_day(resolution);
                 day_clock = 0;
             }
@@ -59,14 +61,7 @@ namespace Core {
             // Update by dt
             hud.update(dt);
             g_anthill.drawable->update(dt);
-            for (const Model::Ant &ant: g_anthill.ants) {
-                if (ant.is_alive()) {
-                    ant.detect_objects(g_event_manager);
-                    ant.do_work(g_anthill.hive_mind);
-                    ant.drawable->update_text(ant);
-                    ant.drawable->update(dt);
-                }
-            }
+            game.update(resolution, dt);
 
             // Draw scene
             window.clear();

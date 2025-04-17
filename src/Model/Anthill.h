@@ -14,7 +14,7 @@ namespace Model {
         std::vector<AnthillRank> ranks;
         int current_rank, hp;        
         Store food_store, wood_store;
-        const int food_per_ant = 1;
+        const float food_per_ant = 0.5;
         const float max_ant_hp = 100;
     public:
         Model::HiveMind hive_mind = Model::HiveMind(food_store, wood_store);
