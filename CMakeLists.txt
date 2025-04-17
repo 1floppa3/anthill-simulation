@@ -53,6 +53,10 @@ add_executable(
     src/Utils/Color.h
     src/View/Render/GlowedSprite.cpp
     src/View/Render/RoundedRect.cpp
+        src/View/Render/ParticleSystem.cpp
+        src/View/Render/ParticleSystem.h
+        src/View/Render/Particle.cpp
+        src/View/Render/Particle.h
 )
 target_compile_features(anthill_simulation PRIVATE cxx_std_17)
 target_link_libraries(anthill_simulation PRIVATE SFML::Graphics)

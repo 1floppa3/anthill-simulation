@@ -13,7 +13,7 @@ namespace Model {
 
     Ant::Ant(int age, float hp, const sf::Vector2u &area) :
             id(++counter), age(age), hp(hp), role(new Roles::NoRole), drawable(new View::AntDrawable(area)) {
-        Core::g_logger.add_message("New ant #" + std::to_string(id) + " is born.");
+        Core::g_logger.add_message("New ant #" + std::to_string(id) + " <color=#2dcc32>is born</color>.");
     }
 
     Ant::Ant(const Ant &other) :
@@ -34,7 +34,8 @@ namespace Model {
     }
 
     Ant::~Ant() {
-        Core::g_logger.add_message("Ant #" + std::to_string(id) + " is dead. Role: " + role->get_name() + '.');
+        Core::g_logger.add_message("Ant #" + std::to_string(id) + " <color=#c96526>is dead</color>. Role: <color=" + Utils::color_to_hex(role->get_ant_color()) + ">" + role->get_name() + "</color>.");
+        Core::g_anthill.drawable->spawn_dust(drawable->get_position());
         delete role;
         delete drawable;
     }

@@ -6,7 +6,6 @@
 #include "../Model/Ant.h"
 #include "../Model/Game.h"
 #include "../Utils/Random.h"
-#include "../Utils/TextureManager.h"
 #include "../View/AnthillDrawable.h"
 #include "../View/Background.h"
 #include "../View/UI/HUD.h"
@@ -47,6 +46,16 @@ namespace Core {
                         g_event_manager.generate_food(sf::Vector2f(resolution));
                     } else if (keycode == sf::Keyboard::Scancode::Down || keycode == sf::Keyboard::Scancode::Num2) {
                         g_event_manager.generate_wood(sf::Vector2f(resolution));
+                    }
+                } else if (const auto *mouse = event->getIf<sf::Event::MouseButtonPressed>()) {
+                    if (mouse->button == sf::Mouse::Button::Left) {
+                        const sf::Vector2f pos = window.mapPixelToCoords(mouse->position);
+                        for (auto it = g_anthill.ants.begin(); it != g_anthill.ants.end(); ++it) {
+                            if (it->drawable->get_global_bounds().contains(pos)) {
+                                it = g_anthill.ants.erase(it);
+                                break;
+                            }
+                        }
                     }
                 }
             }

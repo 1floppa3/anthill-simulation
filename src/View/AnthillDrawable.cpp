@@ -114,38 +114,45 @@ namespace View {
         animation.elapsed = sf::Time::Zero;
         animation.processing = true;
     }
+    void AnthillDrawable::spawn_dust(const sf::Vector2f &pos) {
+        particles.spawn_dust(transform.getInverse().transformPoint(pos));
+    }
+
 
     void AnthillDrawable::update(const sf::Time& dt) {
-        if (!animation.processing) return;
+        particles.update(dt);
 
-        animation.elapsed += dt;
-        float factor = animation.elapsed / animation_duration;
-        if (factor > 1.f)
-            factor = 1.f;
+        if (animation.processing) {
+            animation.elapsed += dt;
+            float factor = animation.elapsed / animation_duration;
+            if (factor > 1.f)
+                factor = 1.f;
 
-        // interpolation
-        for (int i = 0; i < contour_points; ++i)
-            current_state[i] = animation.start_state[i] + (animation.target_state[i] - animation.start_state[i]) * factor;
-        update_shape();
+            // interpolation
+            for (int i = 0; i < contour_points; ++i)
+                current_state[i] = animation.start_state[i] + (animation.target_state[i] - animation.start_state[i]) * factor;
+            update_shape();
 
-        float sum = 0.f;
-        for (int i = 0; i < contour_points; ++i)
-            sum += current_state[i];
+            float sum = 0.f;
+            for (int i = 0; i < contour_points; ++i)
+                sum += current_state[i];
 
-        // приблизительная площадь (как у круга)
-        const float avg_radius = sum / static_cast<float>(contour_points);
-        area = std::numbers::pi_v<float> * avg_radius * avg_radius;
+            // приблизительная площадь (как у круга)
+            const float avg_radius = sum / static_cast<float>(contour_points);
+            area = std::numbers::pi_v<float> * avg_radius * avg_radius;
 
-        if (factor >= 1.f) {
-            current_state = animation.target_state;
-            animation.processing = false;
-            Core::g_logger.add_message("<color=#4778b3>[system]</color> Anthill is expanded. New area: " + std::format("{:.2f}", area/10000.f));
+            if (factor >= 1.f) {
+                current_state = animation.target_state;
+                animation.processing = false;
+                Core::g_logger.add_message("<color=#4778b3>[system]</color> Anthill is expanded. New area: " + std::format("{:.2f}", area/10000.f));
+            }
         }
     }
 
     void AnthillDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-        states.texture = &texture;
         states.transform *= transform;
+        target.draw(particles, states);
+        states.texture = &texture;
         target.draw(vertices, states);
     }
 
